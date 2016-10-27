@@ -4,6 +4,21 @@
              xmlns:local="clr-namespace:AddressBookWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Header text style -->
+        <Style x:Key="headerTextStyle">
+            <Setter Property="Label.VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Label.HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Label.Margin" Value="10,10,0,0"></Setter>
+            <Setter Property="Label.Width" Value="Auto"></Setter>
+            <Setter Property="Grid.Row" Value="0"></Setter>
+            <Setter Property="Label.FontSize" Value="18"></Setter>
+            <Setter Property="Label.FontFamily" Value="SegoeUI"></Setter>
+        </Style>
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="Auto"></Setter>
+            <Setter Property="Padding" Value="10,10,10,10"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

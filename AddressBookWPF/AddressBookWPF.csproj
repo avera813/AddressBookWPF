@@ -55,10 +55,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Address.cs" />
+    <Compile Include="AddressBook.cs" />
+    <Compile Include="AddressBookHome.xaml.cs">
+      <DependentUpon>AddressBookHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAddress.xaml.cs">
+      <DependentUpon>ViewAddress.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddEditAddress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddressBookHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewAddressBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddEditAddress.xaml.cs">
+      <DependentUpon>AddEditAddress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAddressBook.xaml.cs">
+      <DependentUpon>ViewAddressBook.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -67,6 +93,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ViewAddress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

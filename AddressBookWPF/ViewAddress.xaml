@@ -1,0 +1,34 @@
+﻿<Page x:Class="AddressBookWPF.ViewAddress"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AddressBookWPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Address Book - View Entry">
+
+    <Grid Margin="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Style="{StaticResource headerTextStyle}">View Entry</Label>
+        <Grid Margin="10,0,10,0" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource buttonStyle}" x:Name="button" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" IsEnabled="False">Ok</Button>
+        </Grid>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="20,20,20,20" Grid.Row="1" VerticalAlignment="Stretch">
+            
+        </DataGrid>
+
+    </Grid>
+</Page>

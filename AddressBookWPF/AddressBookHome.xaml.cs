@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,22 @@ using System.Windows.Shapes;
 namespace AddressBookWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddressBookHome.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class AddressBookHome : Page
     {
-        public MainWindow()
+        public AddressBookHome()
         {
             InitializeComponent();
+        }
+
+        private void loadAddressBook_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            if (openDialog.ShowDialog() == true)
+            {
+                
+            }
         }
     }
 }

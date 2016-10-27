@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AddressBookWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddAddress.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class AddAddress : Page
     {
-        public MainWindow()
+        public AddAddress()
         {
             InitializeComponent();
         }
