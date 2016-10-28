@@ -24,5 +24,10 @@ namespace AddressBookWPF
         {
             InitializeComponent();
         }
+
+        public ViewAddress(object data):this()
+        {
+            this.DataContext = data;
+        }
     }
 }

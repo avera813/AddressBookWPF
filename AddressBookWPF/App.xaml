@@ -20,5 +20,9 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="labelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Width" Value="65"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
     </Application.Resources>
 </Application>
