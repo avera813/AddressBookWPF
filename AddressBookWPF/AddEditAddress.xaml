@@ -8,7 +8,43 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="AddAddress">
 
-    <Grid>
-        
+    <Grid Margin="10,10,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Style="{StaticResource headerTextStyle}">Add Entry</Label>
+        <Grid Margin="0,0,0,0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Style="{StaticResource labelStyle}" Grid.Column="0" Grid.Row="0">Name:</Label>
+            <TextBox x:Name="name" Style="{StaticResource inputStyle}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"/>
+            <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="0">Address:</Label>
+            <TextBox x:Name="street" Style="{StaticResource inputStyle}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Label Style="{StaticResource labelStyle}" Grid.Row="2" Grid.Column="0">City:</Label>
+            <TextBox x:Name="city" Style="{StaticResource inputStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="0">State:</Label>
+            <TextBox x:Name="state" Style="{StaticResource inputStyle}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="0">Zip:</Label>
+            <TextBox x:Name="zip" Style="{StaticResource inputStyle}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="0">Country:</Label>
+            <TextBox x:Name="country" Style="{StaticResource inputStyle}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
+            <Button Name="saveButton" Style="{StaticResource buttonStyle}" Grid.Row="6" Grid.Column="1" Margin="0,20,5,0" Click="saveButton_Click">Save</Button>
+            <Button Name="cancelButton" Style="{StaticResource buttonStyle}" Grid.Row="6" Grid.Column="2"  Margin="5,20,0,0" Click="cancelButton_Click">Cancel</Button>
+        </Grid>
+
     </Grid>
 </Page>

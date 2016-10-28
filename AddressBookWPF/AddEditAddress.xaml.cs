@@ -24,5 +24,15 @@ namespace AddressBookWPF
         {
             InitializeComponent();
         }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new ViewAddressBook());
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show(this.name.Text.ToString());
+        }
     }
 }

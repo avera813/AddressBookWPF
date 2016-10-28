@@ -11,10 +11,10 @@
     <Grid Margin="10,10,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource headerTextStyle}">View Entry</Label>
+        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0" Grid.Column="0">View Entry</Label>
         <Grid Margin="10,0,10,0" Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -24,20 +24,29 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource buttonStyle}" x:Name="button" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" IsEnabled="False">Ok</Button>
+            <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
         </Grid>
-        <StackPanel HorizontalAlignment="Stretch" Margin="20,0,20,60" Height="30" Grid.Row="1" Orientation="Horizontal">
-            <Label Style="{StaticResource labelStyle}">Name:</Label>
-            <Label Content="{Binding XPath=@Name}"></Label>
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Stretch" Margin="20,0,20,0" Height="30" Grid.Row="1" Orientation="Horizontal">
-            <Label Style="{StaticResource labelStyle}">Address:</Label>
-            <DataGrid ItemsSource="{Binding XPath=Address}" AutoGenerateColumns="False" RowHeaderWidth="20" HorizontalAlignment="Stretch">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding XPath=@Street}"/>
-                    <DataGridTextColumn Binding="{Binding XPath=@City}"/>
-                </DataGrid.Columns>
-                </DataGrid>
-        </StackPanel>
+        <Label Style="{StaticResource labelStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,20,0" Content="{Binding XPath=@Name}" Grid.Row="1" Grid.Column="0"></Label>
+        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="20,40,20,20" Grid.Column="0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Label>
+                        <Label.Content>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}&#x0a;{1}, {2} {3}, {4}">
+                                        <Binding XPath="@Street"/>
+                                        <Binding XPath="@City"/>
+                                        <Binding XPath="@State"/>
+                                        <Binding XPath="@Zip"/>
+                                        <Binding XPath="@Country"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Label.Content>
+                    </Label>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Page>

@@ -21,8 +21,16 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
         <Style x:Key="labelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Width" Value="65"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Right"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="inputStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="Margin" Value="0,5,10,5"></Setter>
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
     </Application.Resources>
 </Application>

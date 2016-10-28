@@ -29,5 +29,11 @@ namespace AddressBookWPF
         {
             this.DataContext = data;
         }
+
+        private void returnToAddressBook_Click(object sender, RoutedEventArgs e)
+        {
+            ViewAddressBook viewAddressBookPage = new ViewAddressBook();
+            this.NavigationService.Navigate(viewAddressBookPage);
+        }
     }
 }

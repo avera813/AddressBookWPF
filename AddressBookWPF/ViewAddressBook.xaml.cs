@@ -55,5 +55,10 @@ namespace AddressBookWPF
             ViewAddress viewAddressPage = new ViewAddress(this.entryListBox.SelectedItem);
             this.NavigationService.Navigate(viewAddressPage);
         }
+
+        private void addAddress_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new AddAddress());
+        }
     }
 }
