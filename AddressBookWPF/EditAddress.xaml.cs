@@ -23,16 +23,18 @@ namespace AddressBookWPF
     public partial class EditAddress : Page
     {
         XmlDocument xmlDoc;
+        string fileName;
 
         public EditAddress()
         {
             InitializeComponent();
         }
 
-        public EditAddress(object data, XmlDocument xmlDoc) : this()
+        public EditAddress(object data, XmlDocument xmlDoc, string fileName) : this()
         {
             this.DataContext = data;
             this.xmlDoc = xmlDoc;
+            this.fileName = fileName;
             XmlAttributeCollection address = (data as XmlElement).SelectSingleNode("Address").Attributes;
             street.Text = address.GetNamedItem("Street").Value;
             city.Text = address.GetNamedItem("City").Value;
@@ -70,7 +72,6 @@ namespace AddressBookWPF
             else
             {
                 XmlDocumentFragment data = xmlDoc.CreateDocumentFragment();
-                XmlNodeList nodes = xmlDoc.SelectNodes("//Person[@Name='" + name.Text + "']");
                 XmlNode currNode = xmlDoc.SelectSingleNode("//Person[@Name='" + name.Text + "']");
 
                 xmlDoc.FirstChild.RemoveChild(currNode);
@@ -86,13 +87,13 @@ namespace AddressBookWPF
                 
                 try
                 {
-                    using (FileStream writeFile = CheckFile.GetWriteFileStream(@"C:\Addresses.xml"))
+                    using (FileStream file = CheckFile.GetWriteFileStream(@fileName))
                     {
-                        xmlDoc.Save(writeFile);
-                        writeFile.Close();
-                        MessageBox.Show("The entry has been added.");
-                        this.NavigationService.Navigate(new ViewAddressBook());
-                    }
+                        xmlDoc.Save(file);
+                        MessageBox.Show("The entry has been updated.");
+                        this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
+                        file.Close();
+                    } 
                 }
                 catch (Exception ex)
                 {
@@ -103,7 +104,7 @@ namespace AddressBookWPF
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new ViewAddressBook());
+            this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
         }
     }
 }

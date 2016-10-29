@@ -23,19 +23,22 @@ namespace AddressBookWPF
     public partial class AddAddress : Page
     {
         XmlDocument xmlDoc;
+        string fileName;
+
         public AddAddress()
         {
             InitializeComponent();
         }
 
-        public AddAddress(XmlDocument xmlDoc):this()
+        public AddAddress(XmlDocument xmlDoc, string fileName):this()
         {
             this.xmlDoc = xmlDoc;
+            this.fileName = fileName;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new ViewAddressBook());
+            this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
@@ -67,18 +70,11 @@ namespace AddressBookWPF
             else
             {
                 XmlDocumentFragment data = xmlDoc.CreateDocumentFragment();
-                XmlNodeList nodes = xmlDoc.SelectNodes("//Person[@Name='" + name.Text + "']");
+                List<XmlElement> nodes = xmlDoc.SelectNodes("//Person").Cast<XmlElement>().Where(item => item.GetAttribute("Name").ToLower().Equals(name.Text.ToLower())).ToList();
 
                 if (nodes.Count > 0)
                 {
-                    data.InnerXml = @String.Format("<Address Street=\"{0}\" City=\"{1}\" State=\"{2}\" Zip=\"{3}\" Country=\"{4}\" />",
-                                                    street.Text,
-                                                    city.Text,
-                                                    state.Text,
-                                                    zip.Text,
-                                                    country.Text);
-
-                    xmlDoc.SelectSingleNode("//Person[@Name='" + name.Text + "']").AppendChild(data);
+                    MessageBox.Show("An entry with the same name already exists.");
                 }
                 else
                 {
@@ -91,21 +87,21 @@ namespace AddressBookWPF
                                                     country.Text);
 
                     xmlDoc.DocumentElement.AppendChild(data);
-                }
-                
-                try
-                {
-                    using (FileStream writeFile = CheckFile.GetWriteFileStream(@"C:\Addresses.xml"))
+
+                    try
                     {
-                        xmlDoc.Save(writeFile);
-                        writeFile.Close();
-                        MessageBox.Show("The entry has been added.");
-                        this.NavigationService.Navigate(new ViewAddressBook());
+                        using (FileStream file = CheckFile.GetWriteFileStream(@fileName))
+                        {
+                            xmlDoc.Save(file);
+                            MessageBox.Show("The entry has been added.");
+                            this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
+                            file.Close();
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }

@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AddressBookWPF"
         mc:Ignorable="d"
-        Title="Address Book" Height="500" Width="500" Source="ViewAddressBook.xaml">
+        Title="Address Book" Height="500" Width="500" Source="AddressBookHome.xaml" ShowsNavigationUI="False">
 </NavigationWindow>

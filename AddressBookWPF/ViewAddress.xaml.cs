@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace AddressBookWPF
 {
@@ -20,19 +22,24 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddress : Page
     {
+        XmlDocument xmlDoc;
+        string fileName;
+
         public ViewAddress()
         {
             InitializeComponent();
         }
 
-        public ViewAddress(object data):this()
+        public ViewAddress(object data, XmlDocument xmlDoc, string fileName):this()
         {
             this.DataContext = data;
+            this.xmlDoc = xmlDoc;
+            this.fileName = fileName;
         }
 
         private void returnToAddressBook_Click(object sender, RoutedEventArgs e)
         {
-            ViewAddressBook viewAddressBookPage = new ViewAddressBook();
+            ViewAddressBook viewAddressBookPage = new ViewAddressBook(xmlDoc,fileName);
             this.NavigationService.Navigate(viewAddressBookPage);
         }
     }

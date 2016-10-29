@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Style="{StaticResource headerTextStyle}">Address Book</Label>
-        <Button Style="{StaticResource buttonStyle}" x:Name="createAddressBook" Grid.Row="1" Grid.Column="0" Margin="20,0,20,50">Create New</Button>
+        <Button Style="{StaticResource buttonStyle}" x:Name="createAddressBook" Grid.Row="1" Grid.Column="0" Margin="20,0,20,50" Click="createAddressBook_Click">Create New</Button>
         <Button Style="{StaticResource buttonStyle}" x:Name="loadAddressBook" Grid.Row="1" Grid.Column="0" Margin="20,50,20,0" Click="loadAddressBook_Click">Load</Button>
     </Grid>
 </Page>

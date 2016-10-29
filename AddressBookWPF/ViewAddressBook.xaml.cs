@@ -24,24 +24,21 @@ namespace AddressBookWPF
     public partial class ViewAddressBook : Page
     {
         XmlDocument xmlDoc;
+        string fileName;
+
         public ViewAddressBook()
         {
             InitializeComponent();
-            try
-            {
-                xmlDoc = new XmlDocument();
-                using (FileStream readFile = CheckFile.GetReadFileStream(@"C:\Addresses.xml", false))
-                {
-                    xmlDoc.Load(readFile);
-                    List<XmlElement> elems = xmlDoc.SelectNodes("Addresses/Person").Cast<XmlElement>().ToList();
-                    this.entryListBox.ItemsSource = elems.OrderBy(item => item.GetAttribute("Name").ToString());
-                    readFile.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+        }
+
+        public ViewAddressBook(XmlDocument xmlDoc, string fileName):this()
+        {
+            this.xmlDoc = xmlDoc;
+            this.fileName = fileName;
+            List<XmlElement> elems = xmlDoc.SelectNodes("Addresses/Person").Cast<XmlElement>().ToList();
+            this.entryListBox.ItemsSource = elems.OrderBy(item => item.GetAttribute("Name").ToString());
+            addAddress.IsEnabled = true;
+            closeAddressBook.IsEnabled = true;
         }
 
         /// <summary>
@@ -66,19 +63,24 @@ namespace AddressBookWPF
 
         private void editAddress_Click(object sender, RoutedEventArgs e)
         {
-            EditAddress editAddressPage = new EditAddress(this.entryListBox.SelectedItem, xmlDoc);
+            EditAddress editAddressPage = new EditAddress(this.entryListBox.SelectedItem, xmlDoc, fileName);
             this.NavigationService.Navigate(editAddressPage);
         }
 
         private void viewAddress_Click(object sender, RoutedEventArgs e)
         {
-            ViewAddress viewAddressPage = new ViewAddress(this.entryListBox.SelectedItem);
+            ViewAddress viewAddressPage = new ViewAddress(this.entryListBox.SelectedItem, xmlDoc, fileName);
             this.NavigationService.Navigate(viewAddressPage);
         }
 
         private void addAddress_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new AddAddress(xmlDoc));
+            this.NavigationService.Navigate(new AddAddress(xmlDoc, fileName));
+        }
+
+        private void closeAddressBook_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new AddressBookHome());
         }
     }
 }
