@@ -13,25 +13,13 @@
             <DataTemplate x:Key="entryItemTemplate">
                 <Label Content="{Binding XPath=@Name}" />
             </DataTemplate>
-            <XmlDataProvider x:Key="AddressDataSource" XPath="Addresses">
-                <x:XData>
-                    <Addresses xmlns="">
-                        <Person Name="Alex Vera">
-                            <Address Street="15914 44th Ave W" City="Lynnwood" State="WA" Zip="98087" Country="USA"/>
-                            <Address Street="8104 N Hale Ave" City="Tampa" State="FL" Zip="33614" Country="USA"/>
-                        </Person>
-                    </Addresses>
-                </x:XData>
-            </XmlDataProvider>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListBox x:Name="entryListBox" Height="168" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Stretch"
-                 ItemsSource="{Binding Source={StaticResource AddressDataSource}, XPath=Person}"
-                 ItemTemplate="{StaticResource entryItemTemplate}" SelectionChanged="entryListBox_SelectionChanged"/>
+        <ListBox x:Name="entryListBox" Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Stretch" ItemTemplate="{StaticResource entryItemTemplate}" SelectionChanged="entryListBox_SelectionChanged"/>
         <Label Style="{StaticResource headerTextStyle}">Address Book</Label>
         <Grid Margin="10,0,10,0" Grid.Row="2">
             <Grid.RowDefinitions>
@@ -43,9 +31,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource buttonStyle}" x:Name="viewAddress" Margin="0,0,5,0" Grid.Row="0" Grid.Column="0" IsEnabled="False" Click="viewAddress_Click">View</Button>
-            <Button Style="{StaticResource buttonStyle}" x:Name="editAddress" Margin="5,0,0,0" Grid.Row="0" Grid.Column="1" IsEnabled="False" Click="editAddress_Click">Edit</Button>
-            <Button Style="{StaticResource buttonStyle}" x:Name="addAddress" Margin="0,0,0,0" Grid.Row="0" Grid.Column="3" Click="addAddress_Click">Add</Button>
+            <Button Style="{StaticResource buttonStyle}" x:Name="viewAddress" Margin="0,20,5,0" Grid.Row="0" Grid.Column="0" IsEnabled="False" Click="viewAddress_Click">View</Button>
+            <Button Style="{StaticResource buttonStyle}" x:Name="editAddress" Margin="5,20,0,0" Grid.Row="0" Grid.Column="1" IsEnabled="False" Click="editAddress_Click">Edit</Button>
+            <Button Style="{StaticResource buttonStyle}" x:Name="addAddress" Margin="0,20,0,0" Grid.Row="0" Grid.Column="3" Click="addAddress_Click">Add</Button>
         </Grid>
 
     </Grid>

@@ -26,8 +26,8 @@
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
         </Grid>
-        <Label Style="{StaticResource labelStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,20,0" Content="{Binding XPath=@Name}" Grid.Row="1" Grid.Column="0"></Label>
-        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="20,40,20,20" Grid.Column="0">
+        <Label Style="{StaticResource entryLabelStyle}" Content="{Binding XPath=@Name}" Grid.Row="1" Grid.Column="0"></Label>
+        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,40,10,20" Grid.Column="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Label>

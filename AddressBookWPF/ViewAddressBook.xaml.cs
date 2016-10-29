@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.IO;
+using System.ComponentModel;
 
 namespace AddressBookWPF
 {
@@ -20,9 +23,25 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddressBook : Page
     {
+        XmlDocument xmlDoc;
         public ViewAddressBook()
         {
             InitializeComponent();
+            try
+            {
+                xmlDoc = new XmlDocument();
+                using (FileStream readFile = CheckFile.GetReadFileStream(@"C:\Addresses.xml", false))
+                {
+                    xmlDoc.Load(readFile);
+                    List<XmlElement> elems = xmlDoc.SelectNodes("Addresses/Person").Cast<XmlElement>().ToList();
+                    this.entryListBox.ItemsSource = elems.OrderBy(item => item.GetAttribute("Name").ToString());
+                    readFile.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -47,7 +66,8 @@ namespace AddressBookWPF
 
         private void editAddress_Click(object sender, RoutedEventArgs e)
         {
-
+            EditAddress editAddressPage = new EditAddress(this.entryListBox.SelectedItem, xmlDoc);
+            this.NavigationService.Navigate(editAddressPage);
         }
 
         private void viewAddress_Click(object sender, RoutedEventArgs e)
@@ -58,7 +78,7 @@ namespace AddressBookWPF
 
         private void addAddress_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new AddAddress());
+            this.NavigationService.Navigate(new AddAddress(xmlDoc));
         }
     }
 }

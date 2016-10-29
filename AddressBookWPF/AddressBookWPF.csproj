@@ -55,19 +55,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Address.cs" />
-    <Compile Include="AddressBook.cs" />
     <Compile Include="AddressBookHome.xaml.cs">
       <DependentUpon>AddressBookHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CheckFile.cs" />
+    <Compile Include="EditAddress.xaml.cs">
+      <DependentUpon>EditAddress.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewAddress.xaml.cs">
       <DependentUpon>ViewAddress.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddEditAddress.xaml">
+    <Page Include="AddAddress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddressBookHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditAddress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,8 +85,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddEditAddress.xaml.cs">
-      <DependentUpon>AddEditAddress.xaml</DependentUpon>
+    <Compile Include="AddAddress.xaml.cs">
+      <DependentUpon>AddAddress.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewAddressBook.xaml.cs">
       <DependentUpon>ViewAddressBook.xaml</DependentUpon>
