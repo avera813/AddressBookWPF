@@ -58,10 +58,12 @@
     <Compile Include="AddressBookHome.xaml.cs">
       <DependentUpon>AddressBookHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddressForm.cs" />
     <Compile Include="CheckFile.cs" />
     <Compile Include="EditAddress.xaml.cs">
       <DependentUpon>EditAddress.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReaderWriter.cs" />
     <Compile Include="ViewAddress.xaml.cs">
       <DependentUpon>ViewAddress.xaml</DependentUpon>
     </Compile>

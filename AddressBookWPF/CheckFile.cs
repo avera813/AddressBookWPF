@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AddressBookWPF
 {
@@ -38,7 +34,7 @@ namespace AddressBookWPF
             FileStream fs = null;
             try
             {
-                fs = new FileStream(@fileName, FileMode.OpenOrCreate);
+                fs = new FileStream(@fileName, FileMode.Create);
             }
             catch (DirectoryNotFoundException)
             {

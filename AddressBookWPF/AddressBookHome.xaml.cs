@@ -1,20 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
 
 namespace AddressBookWPF
 {
@@ -36,18 +23,9 @@ namespace AddressBookWPF
             {
                 try
                 {
-                    String fileName = openDialog.FileName;
-                    XmlDocument xmlDoc = new XmlDocument();
-                    using (FileStream file = CheckFile.GetReadFileStream(@fileName))
-                    {
-                        xmlDoc.Load(file);
-                        this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
-                        file.Close();
-                    }
-                }
-                catch (XmlException ex)
-                {
-                    MessageBox.Show("Invalid Xml - Line: " + ex.LineNumber + ", Position: " + ex.LinePosition);
+                    string fileName = openDialog.FileName;
+                    ReaderWriter.GetXmlDocument(fileName);
+                    this.NavigationService.Navigate(new ViewAddressBook(fileName));
                 }
                 catch (Exception ex)
                 {
@@ -64,15 +42,10 @@ namespace AddressBookWPF
             {
                 try
                 {
-                    String fileName = saveDialog.FileName;
-                    XmlDocument xmlDoc = new XmlDocument();
-                    using (FileStream file = CheckFile.GetWriteFileStream(@fileName))
-                    {
-                        xmlDoc.LoadXml("<Addresses></Addresses>");
-                        xmlDoc.Save(file);
-                        this.NavigationService.Navigate(new ViewAddressBook(xmlDoc, fileName));
-                        file.Close();
-                    }
+                    string fileName = saveDialog.FileName;
+                    ReaderWriter.CreateXmlDocument(fileName);
+                    ReaderWriter.GetXmlDocument(fileName);
+                    this.NavigationService.Navigate(new ViewAddressBook(fileName));
                 }
                 catch (Exception ex)
                 {

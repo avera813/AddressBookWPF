@@ -24,13 +24,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,0" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
+            <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,20" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
         </Grid>
         <Label Style="{StaticResource entryLabelStyle}" Content="{Binding XPath=@Name}" Grid.Row="1" Grid.Column="0"></Label>
-        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,40,10,20" Grid.Column="0">
+        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="20,40,20,20" Grid.Column="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Label>
+                    <Label Padding="0,0,0,0">
                         <Label.Content>
                             <TextBlock>
                                 <TextBlock.Text>
