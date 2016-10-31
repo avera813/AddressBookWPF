@@ -35,23 +35,12 @@ namespace AddressBookWPF
             {
                 AddressForm.Validate(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
                 XmlDocument xmlDoc = ReaderWriter.GetXmlDocument(fileName);
-                List<XmlElement> nodes = xmlDoc.SelectNodes("//Person").Cast<XmlElement>().Where(item => item.GetAttribute("Name").ToLower().Equals(name.Text.ToLower())).ToList();
-
-                // Make sure name does not already exist in the address book
-                if (nodes.Count > 0)
-                    throw new ArgumentException("An entry with the same name already exists.");
 
                 // Set current node based on initial name value
-                XmlElement personElem = xmlDoc.CreateElement("Person");
-                personElem.SetAttribute("Name", name.Text);
+                XmlElement personElem = AddressForm.CreateNewPerson(xmlDoc, name.Text);
 
                 // Create new address element and add attributes
-                XmlElement addressElem = xmlDoc.CreateElement("Address");
-                addressElem.SetAttribute("Street", street.Text);
-                addressElem.SetAttribute("City", city.Text);
-                addressElem.SetAttribute("State", state.Text);
-                addressElem.SetAttribute("Zip", zip.Text);
-                addressElem.SetAttribute("Country", country.Text);
+                XmlElement addressElem = AddressForm.CreateAddressElement(xmlDoc, street.Text, city.Text, state.Text, zip.Text, country.Text);
 
                 // Append address to person element
                 personElem.PrependChild(addressElem);

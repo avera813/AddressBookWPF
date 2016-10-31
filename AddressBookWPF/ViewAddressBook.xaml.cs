@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,13 +21,20 @@ namespace AddressBookWPF
 
         public ViewAddressBook(string fileName) : this()
         {
-            this.DataContext = ReaderWriter.GetXmlDocument(fileName);
-            this.fileName = fileName;
-            List<XmlElement> elems = (this.DataContext as XmlDocument).SelectNodes("Addresses/Person").Cast<XmlElement>().ToList();
-            this.entryListBox.ItemsSource = elems.OrderBy(item => item.GetAttribute("Name").ToString());
-            addAddress.IsEnabled = true;
-            closeAddressBook.IsEnabled = true;
-        }
+            try
+            {
+                this.DataContext = ReaderWriter.GetXmlDocument(fileName);
+                this.fileName = fileName;
+                List<XmlElement> elems = (this.DataContext as XmlDocument).SelectNodes("Addresses/Person").Cast<XmlElement>().ToList();
+                this.entryListBox.ItemsSource = elems.OrderBy(item => item.GetAttribute("Name").ToString());
+                addAddress.IsEnabled = true;
+                closeAddressBook.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+}
 
         /// <summary>
         /// Enables/disables View/Edit address buttons

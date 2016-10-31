@@ -33,27 +33,13 @@ namespace AddressBookWPF
             {
                 AddressForm.Validate(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
                 XmlDocument xmlDoc = ReaderWriter.GetXmlDocument(fileName);
-                List<XmlElement> nodes = xmlDoc.SelectNodes("//Person").Cast<XmlElement>().Where(item => item.GetAttribute("Name").ToLower().Equals(name.Text.ToLower())).ToList();
-
-                // If name change occurs, make sure it does not already exist in the address book
-                if (nodes.Count > 0 && !name.Text.ToLower().Equals(oldName.ToLower()))
-                    throw new ArgumentException("An entry with the same name already exists.");
 
                 // Set current node based on initial name value
-                XmlElement currElem = xmlDoc.SelectSingleNode("Addresses").SelectNodes("Person").Cast<XmlElement>().Where(item=>item.GetAttribute("Name").Equals(oldName)).First();
-                if(currElem.HasChildNodes)
-                    currElem.RemoveAll();
-
-                currElem.SetAttribute("Name", name.Text);    
+                XmlElement personElem = AddressForm.CreateNewPerson(xmlDoc, name.Text, oldName);
 
                 // Create new address element and add to currElem
-                XmlElement addressElem = xmlDoc.CreateElement("Address");
-                addressElem.SetAttribute("Street", street.Text);
-                addressElem.SetAttribute("City", city.Text);
-                addressElem.SetAttribute("State", state.Text);
-                addressElem.SetAttribute("Zip", zip.Text);
-                addressElem.SetAttribute("Country", country.Text);
-                currElem.PrependChild(addressElem);
+                XmlElement addressElem = AddressForm.CreateAddressElement(xmlDoc, street.Text, city.Text, state.Text, zip.Text, country.Text);
+                personElem.PrependChild(addressElem);
                         
                 ReaderWriter.WriteXmlToDocument(fileName, xmlDoc);
                 MessageBox.Show("The entry has been updated.");
