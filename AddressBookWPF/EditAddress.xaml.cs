@@ -42,7 +42,7 @@ namespace AddressBookWPF
                 else
                 {
                     // Set current node based on initial name value
-                    XmlElement currElem = xmlDoc.SelectSingleNode("Addresses").SelectSingleNode("Person[@Name=\"" + oldName + "\"]") as XmlElement;
+                    XmlElement currElem = xmlDoc.SelectSingleNode("Addresses").SelectNodes("Person").Cast<XmlElement>().Where(item=>item.GetAttribute("Name").Equals(oldName)).First();
                     currElem.SetAttribute("Name", name.Text);    
 
                     // Create new address element and add attributes
