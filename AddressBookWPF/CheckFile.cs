@@ -26,6 +26,10 @@ namespace AddressBookWPF
             {
                 throw new UnauthorizedAccessException("Read access denied to file: " + fileName);
             }
+            catch (IOException)
+            {
+                throw new IOException("Unable to read the file: " + fileName);
+            }
             return fs;
         }
 
@@ -44,6 +48,10 @@ namespace AddressBookWPF
             catch (UnauthorizedAccessException)
             {
                 throw new UnauthorizedAccessException("Write access denied to file: " + fileName);
+            }
+            catch (IOException)
+            {
+                throw new IOException("Unable to write to the file: " + fileName);
             }
             return fs;
         }
