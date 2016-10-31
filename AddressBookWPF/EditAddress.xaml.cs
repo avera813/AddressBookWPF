@@ -35,34 +35,29 @@ namespace AddressBookWPF
                 XmlDocument xmlDoc = ReaderWriter.GetXmlDocument(fileName);
                 List<XmlElement> nodes = xmlDoc.SelectNodes("//Person").Cast<XmlElement>().Where(item => item.GetAttribute("Name").ToLower().Equals(name.Text.ToLower())).ToList();
 
-                if (nodes.Count > 1)
-                {
+                // If name change occurs, make sure it does not already exist in the address book
+                if (nodes.Count > 0 && !name.Text.ToLower().Equals(oldName.ToLower()))
                     throw new ArgumentException("An entry with the same name already exists.");
-                }
-                else
-                {
-                    // Set current node based on initial name value
-                    XmlElement currElem = xmlDoc.SelectSingleNode("Addresses").SelectNodes("Person").Cast<XmlElement>().Where(item=>item.GetAttribute("Name").Equals(oldName)).First();
-                    currElem.SetAttribute("Name", name.Text);    
 
-                    // Create new address element and add attributes
-                    XmlElement addressElem = xmlDoc.CreateElement("Address");
-                    addressElem.SetAttribute("Street", street.Text);
-                    addressElem.SetAttribute("City", city.Text);
-                    addressElem.SetAttribute("State", state.Text);
-                    addressElem.SetAttribute("Zip", zip.Text);
-                    addressElem.SetAttribute("Country", country.Text);
+                // Set current node based on initial name value
+                XmlElement currElem = xmlDoc.SelectSingleNode("Addresses").SelectNodes("Person").Cast<XmlElement>().Where(item=>item.GetAttribute("Name").Equals(oldName)).First();
+                if(currElem.HasChildNodes)
+                    currElem.RemoveAll();
 
-                    if (currElem != null && currElem.ChildNodes.Count > 0)
-                    {
-                        currElem.RemoveChild(currElem.FirstChild);
-                        currElem.PrependChild(addressElem);
-                    }
+                currElem.SetAttribute("Name", name.Text);    
+
+                // Create new address element and add to currElem
+                XmlElement addressElem = xmlDoc.CreateElement("Address");
+                addressElem.SetAttribute("Street", street.Text);
+                addressElem.SetAttribute("City", city.Text);
+                addressElem.SetAttribute("State", state.Text);
+                addressElem.SetAttribute("Zip", zip.Text);
+                addressElem.SetAttribute("Country", country.Text);
+                currElem.PrependChild(addressElem);
                         
-                    ReaderWriter.WriteXmlToDocument(fileName, xmlDoc);
-                    MessageBox.Show("The entry has been updated.");
-                    this.NavigationService.Navigate(new ViewAddressBook(fileName));
-                }
+                ReaderWriter.WriteXmlToDocument(fileName, xmlDoc);
+                MessageBox.Show("The entry has been updated.");
+                this.NavigationService.Navigate(new ViewAddressBook(fileName));
             }
             catch (Exception ex)
             {

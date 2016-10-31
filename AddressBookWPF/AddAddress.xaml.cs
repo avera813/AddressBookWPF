@@ -33,38 +33,35 @@ namespace AddressBookWPF
         {
             try
             {
+                AddressForm.Validate(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
                 XmlDocument xmlDoc = ReaderWriter.GetXmlDocument(fileName);
                 List<XmlElement> nodes = xmlDoc.SelectNodes("//Person").Cast<XmlElement>().Where(item => item.GetAttribute("Name").ToLower().Equals(name.Text.ToLower())).ToList();
-                AddressForm.Validate(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
-                
+
+                // Make sure name does not already exist in the address book
                 if (nodes.Count > 0)
-                {
                     throw new ArgumentException("An entry with the same name already exists.");
-                }
-                else
-                {
-                    // Set current node based on initial name value
-                    XmlElement personElem = xmlDoc.CreateElement("Person");
-                    personElem.SetAttribute("Name", name.Text);
 
-                    // Create new address element and add attributes
-                    XmlElement addressElem = xmlDoc.CreateElement("Address");
-                    addressElem.SetAttribute("Street", street.Text);
-                    addressElem.SetAttribute("City", city.Text);
-                    addressElem.SetAttribute("State", state.Text);
-                    addressElem.SetAttribute("Zip", zip.Text);
-                    addressElem.SetAttribute("Country", country.Text);
+                // Set current node based on initial name value
+                XmlElement personElem = xmlDoc.CreateElement("Person");
+                personElem.SetAttribute("Name", name.Text);
 
-                    // Append address to person element
-                    personElem.AppendChild(addressElem);
+                // Create new address element and add attributes
+                XmlElement addressElem = xmlDoc.CreateElement("Address");
+                addressElem.SetAttribute("Street", street.Text);
+                addressElem.SetAttribute("City", city.Text);
+                addressElem.SetAttribute("State", state.Text);
+                addressElem.SetAttribute("Zip", zip.Text);
+                addressElem.SetAttribute("Country", country.Text);
 
-                    // Append person element to xmlDoc
-                    xmlDoc.SelectSingleNode("Addresses").AppendChild(personElem);
+                // Append address to person element
+                personElem.PrependChild(addressElem);
 
-                    ReaderWriter.WriteXmlToDocument(fileName, xmlDoc);
-                    MessageBox.Show("The entry has been added.");
-                    this.NavigationService.Navigate(new ViewAddressBook(fileName));
-                }
+                // Append person element to xmlDoc
+                xmlDoc.SelectSingleNode("Addresses").AppendChild(personElem);
+
+                ReaderWriter.WriteXmlToDocument(fileName, xmlDoc);
+                MessageBox.Show("The entry has been added.");
+                this.NavigationService.Navigate(new ViewAddressBook(fileName));
             }
             catch (Exception ex)
             {
