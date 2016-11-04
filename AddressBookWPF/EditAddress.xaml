@@ -31,17 +31,17 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Style="{StaticResource labelStyle}" Grid.Column="0" Grid.Row="0">Name:</Label>
-            <TextBox x:Name="name" Style="{StaticResource inputStyle}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Text="{Binding XPath=@Name}" />
+            <TextBox x:Name="name" Style="{StaticResource inputStyle}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Text="{Binding Path=Name}" />
             <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="0">Address:</Label>
-            <TextBox x:Name="street" Style="{StaticResource inputStyle}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding XPath=Address/@Street}"/>
+            <TextBox x:Name="street" Style="{StaticResource inputStyle}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=Street}"/>
             <Label Style="{StaticResource labelStyle}" Grid.Row="2" Grid.Column="0">City:</Label>
-            <TextBox x:Name="city" Style="{StaticResource inputStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding XPath=Address/@City}"/>
+            <TextBox x:Name="city" Style="{StaticResource inputStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=City}"/>
             <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="0">State:</Label>
-            <TextBox x:Name="state" Style="{StaticResource inputStyle}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding XPath=Address/@State}"/>
+            <TextBox x:Name="state" Style="{StaticResource inputStyle}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=State}"/>
             <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="0">Zip:</Label>
-            <TextBox x:Name="zip" Style="{StaticResource inputStyle}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding XPath=Address/@Zip}"/>
+            <TextBox x:Name="zip" Style="{StaticResource inputStyle}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=Zip}"/>
             <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="0">Country:</Label>
-            <TextBox x:Name="country" Style="{StaticResource inputStyle}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding XPath=Address/@Country}"/>
+            <TextBox x:Name="country" Style="{StaticResource inputStyle}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=Country}"/>
             <Button Name="saveButton" Style="{StaticResource buttonStyle}" Grid.Row="6" Grid.Column="1" Margin="0,20,5,0" Click="saveButton_Click">Save</Button>
             <Button Name="cancelButton" Style="{StaticResource buttonStyle}" Grid.Row="6" Grid.Column="2"  Margin="5,20,0,0" Click="cancelButton_Click">Cancel</Button>
         </Grid>

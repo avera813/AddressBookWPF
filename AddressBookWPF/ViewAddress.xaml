@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Address Book - View Entry">
-
     <Grid Margin="10,10,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,27 +25,21 @@
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,20" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
         </Grid>
-        <Label Style="{StaticResource entryLabelStyle}" Content="{Binding XPath=@Name}" Grid.Row="1" Grid.Column="0"></Label>
-        <ItemsControl ItemsSource="{Binding XPath=Address}" HorizontalAlignment="Stretch" Grid.Row="1" Margin="20,40,20,20" Grid.Column="0">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Label Padding="0,0,0,0">
-                        <Label.Content>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}&#x0a;{1}, {2} {3}, {4}">
-                                        <Binding XPath="@Street"/>
-                                        <Binding XPath="@City"/>
-                                        <Binding XPath="@State"/>
-                                        <Binding XPath="@Zip"/>
-                                        <Binding XPath="@Country"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </Label.Content>
-                    </Label>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Label Style="{StaticResource entryLabelStyle}" Content="{Binding Name}" Grid.Row="1" Grid.Column="0"></Label>
+        <Label HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="20,40,20,20" Grid.Row="1">
+            <Label.Content>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}&#x0a;{1}, {2} {3}, {4}">
+                            <Binding Path="Street"/>
+                            <Binding Path="City"/>
+                            <Binding Path="State"/>
+                            <Binding Path="Zip"/>
+                            <Binding Path="Country"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Label.Content>
+        </Label>
     </Grid>
 </Page>

@@ -8,22 +8,20 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddress : Page
     {
-        string fileName;
 
         public ViewAddress()
         {
             InitializeComponent();
         }
 
-        public ViewAddress(object data, string fileName) : this()
+        public ViewAddress(object data) : this()
         {
             this.DataContext = data;
-            this.fileName = fileName;
         }
 
         private void returnToAddressBook_Click(object sender, RoutedEventArgs e)
         {
-            ViewAddressBook viewAddressBookPage = new ViewAddressBook(fileName);
+            ViewAddressBook viewAddressBookPage = new ViewAddressBook();
             this.NavigationService.Navigate(viewAddressBookPage);
         }
     }
