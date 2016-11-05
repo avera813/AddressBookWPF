@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,8 +9,8 @@ namespace AddressBookWPF
     /// </summary>
     public partial class EditAddress : Page
     {
-        private AddressBookDBDataSet addressBookDbDataSet;
-        private AddressBookDBDataSetTableAdapters.PersonTableAdapter addressBookDbDataSetPersonTableAdapter;
+
+        private string oldName;
 
         public EditAddress()
         {
@@ -23,25 +20,14 @@ namespace AddressBookWPF
         public EditAddress(object data) : this()
         {
             this.DataContext = data;
-            addressBookDbDataSet = new AddressBookDBDataSet();
-            addressBookDbDataSetPersonTableAdapter = new AddressBookDBDataSetTableAdapters.PersonTableAdapter();
+            oldName = (data as AddressBookDBDataSet.PersonRow).Name;
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                AddressForm.Validate(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
-                
-                AddressBookDBDataSet.PersonRow personRow = this.DataContext as AddressBookDBDataSet.PersonRow;
-                personRow.Name = name.Text;
-                personRow.Street = street.Text;
-                personRow.City = city.Text;
-                personRow.State = state.Text;
-                personRow.Zip = zip.Text;
-                personRow.Country = country.Text;
-                addressBookDbDataSetPersonTableAdapter.Update(personRow);
-
+                AddressBookData.UpdateEntry(this.DataContext as AddressBookDBDataSet.PersonRow, oldName);
                 MessageBox.Show("The entry has been updated.");
                 this.NavigationService.Navigate(new ViewAddressBook());               
             }

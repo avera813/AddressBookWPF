@@ -11,22 +11,18 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddressBook : Page
     {
-        private AddressBookDBDataSet addressBookDbDataSet;
-        private AddressBookDBDataSetTableAdapters.PersonTableAdapter addressBookDbDataSetPersonTableAdapter;
 
         public ViewAddressBook()
         {
             InitializeComponent();
-            addressBookDbDataSet = new AddressBookDBDataSet();
-            addressBookDbDataSetPersonTableAdapter = new AddressBookDBDataSetTableAdapters.PersonTableAdapter();
             UpdateEntries();
             addAddress.IsEnabled = true;
         }
 
         private void UpdateEntries()
         {
-            this.DataContext = addressBookDbDataSetPersonTableAdapter.GetData();
-            this.entryListBox.ItemsSource = addressBookDbDataSetPersonTableAdapter.GetData().OrderBy(item => item.Name);
+            this.DataContext = AddressBookData.GetEntries();
+            this.entryListBox.ItemsSource = AddressBookData.GetEntries().OrderBy(item => item.Name);
         }
 
         /// <summary>
@@ -63,9 +59,8 @@ namespace AddressBookWPF
         {
             try
             {
-                AddressBookDBDataSet.PersonRow personRow = this.entryListBox.SelectedItem as AddressBookDBDataSet.PersonRow;
-                addressBookDbDataSetPersonTableAdapter.Delete(personRow.Id, personRow.Name, personRow.City, personRow.Country, personRow.State, personRow.Street, personRow.Zip);
-                MessageBox.Show(String.Format("The entry for {0} has been removed from the address book.", personRow.Name));
+                AddressBookData.DeleteEntry(this.entryListBox.SelectedItem as AddressBookDBDataSet.PersonRow);
+                MessageBox.Show("The entry has been removed from the address book.");
                 UpdateEntries();
             }
             catch (Exception ex)
