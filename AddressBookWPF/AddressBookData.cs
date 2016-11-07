@@ -21,20 +21,46 @@ namespace AddressBookWPF
             AddressForm.Validate(name, street, city, state, zip, country);
             ValidatePerson(name);
 
-            int nextId = (int)addressBookDbDataSetPersonTableAdapter.GetData().Rows[addressBookDbDataSetPersonTableAdapter.GetData().Count - 1][0] + 1;
-            addressBookDbDataSetPersonTableAdapter.Insert(nextId, name, city, country, state, street, zip);
+            int nextId = 0;
+            if(addressBookDbDataSetPersonTableAdapter.GetData().Count > 0)
+            {
+                nextId = (int)addressBookDbDataSetPersonTableAdapter.GetData().Rows[addressBookDbDataSetPersonTableAdapter.GetData().Count - 1][0] + 1;
+            }
+           
+            try
+            {
+                addressBookDbDataSetPersonTableAdapter.Insert(nextId, name, city, country, state, street, zip);
+            }
+            catch (Exception)
+            {
+                throw new Exception(String.Format("Unable to add the address book entry for {0}", name));
+            }
         }
 
         public static void UpdateEntry(AddressBookDBDataSet.PersonRow personRow, string oldName)
         {
             AddressForm.Validate(personRow.Name, personRow.Street, personRow.City, personRow.State, personRow.Zip, personRow.Country);
             ValidatePerson(personRow.Name, oldName);
-            addressBookDbDataSetPersonTableAdapter.Update(personRow);
+            try
+            {
+                addressBookDbDataSetPersonTableAdapter.Update(personRow);
+            }
+            catch (Exception)
+            {
+                throw new Exception(String.Format("Unable to update the address book entry for {0}", personRow.Name));
+            }
         }
 
         public static void DeleteEntry(AddressBookDBDataSet.PersonRow personRow)
         {
-            addressBookDbDataSetPersonTableAdapter.Delete(personRow.Id, personRow.Name, personRow.City, personRow.Country, personRow.State, personRow.Street, personRow.Zip);
+            try
+            {
+                addressBookDbDataSetPersonTableAdapter.Delete(personRow.Id, personRow.Name, personRow.City, personRow.Country, personRow.State, personRow.Street, personRow.Zip);
+            }
+            catch (Exception)
+            {
+                throw new Exception(String.Format("Unable to delete the address book entry for {0}", personRow.Name));
+            }
         }
 
         private static void ValidatePerson(string name, string oldName = "")
