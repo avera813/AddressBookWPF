@@ -20,16 +20,10 @@ namespace AddressBookWPF
         {
             AddressForm.Validate(name, street, city, state, zip, country);
             ValidatePerson(name);
-
-            int nextId = 0;
-            if(addressBookDbDataSetPersonTableAdapter.GetData().Count > 0)
-            {
-                nextId = (int)addressBookDbDataSetPersonTableAdapter.GetData().Rows[addressBookDbDataSetPersonTableAdapter.GetData().Count - 1][0] + 1;
-            }
            
             try
             {
-                addressBookDbDataSetPersonTableAdapter.Insert(nextId, name, city, country, state, street, zip);
+                addressBookDbDataSetPersonTableAdapter.Insert(name, street, city, state, zip, country);
             }
             catch (Exception)
             {
@@ -55,7 +49,7 @@ namespace AddressBookWPF
         {
             try
             {
-                addressBookDbDataSetPersonTableAdapter.Delete(personRow.Id, personRow.Name, personRow.City, personRow.Country, personRow.State, personRow.Street, personRow.Zip);
+                addressBookDbDataSetPersonTableAdapter.Delete(personRow.Id, personRow.Name, personRow.Street, personRow.City, personRow.State, personRow.Zip, personRow.Country);
             }
             catch (Exception)
             {
