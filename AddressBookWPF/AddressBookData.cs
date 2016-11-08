@@ -19,7 +19,7 @@ namespace AddressBookWPF
         public static void AddEntry(string name, string street, string city, string state, string zip, string country)
         {
             AddressForm.Validate(name, street, city, state, zip, country);
-            ValidatePerson(name);
+            AddressForm.ValidatePerson(name);
            
             try
             {
@@ -34,7 +34,7 @@ namespace AddressBookWPF
         public static void UpdateEntry(AddressBookDBDataSet.PersonRow personRow, string oldName)
         {
             AddressForm.Validate(personRow.Name, personRow.Street, personRow.City, personRow.State, personRow.Zip, personRow.Country);
-            ValidatePerson(personRow.Name, oldName);
+            AddressForm.ValidatePerson(personRow.Name, oldName);
             try
             {
                 addressBookDbDataSetPersonTableAdapter.Update(personRow);
@@ -54,16 +54,6 @@ namespace AddressBookWPF
             catch (Exception)
             {
                 throw new Exception(String.Format("Unable to delete the address book entry for {0}", personRow.Name));
-            }
-        }
-
-        private static void ValidatePerson(string name, string oldName = "")
-        {
-            int foundEntries = addressBookDbDataSetPersonTableAdapter.GetData().Rows.Cast<DataRow>().Where(item => item[1].ToString().ToLower().Equals(name.ToLower())).ToList().Count;
-           
-            if ((foundEntries > 0 && String.IsNullOrWhiteSpace(oldName)) || (foundEntries > 0 && !String.IsNullOrWhiteSpace(oldName) && !oldName.ToLower().Equals(name.ToLower())))
-            {
-                throw new ArgumentException("An entry with the same name already exists.");
             }
         }
     }

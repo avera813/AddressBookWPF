@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Linq;
 
 namespace AddressBookWPF
 {
@@ -9,26 +11,36 @@ namespace AddressBookWPF
         {
             string errorMessage = "";
 
-            if (String.IsNullOrEmpty(name))
+            if (String.IsNullOrWhiteSpace(name))
                 errorMessage += "Please provide a name." + System.Environment.NewLine;
 
-            if (String.IsNullOrEmpty(street))
+            if (String.IsNullOrWhiteSpace(street))
                 errorMessage += "Please provide a street." + System.Environment.NewLine;
 
-            if (String.IsNullOrEmpty(city))
+            if (String.IsNullOrWhiteSpace(city))
                 errorMessage += "Please provide a city." + System.Environment.NewLine;
 
-            if (String.IsNullOrEmpty(state))
+            if (String.IsNullOrWhiteSpace(state))
                 errorMessage += "Please provide a state." + System.Environment.NewLine;
 
-            if (String.IsNullOrEmpty(zip))
+            if (String.IsNullOrWhiteSpace(zip))
                 errorMessage += "Please provide a zip." + System.Environment.NewLine;
 
-            if (String.IsNullOrEmpty(country))
+            if (String.IsNullOrWhiteSpace(country))
                 errorMessage += "Please provide a country.";
 
-            if(!String.IsNullOrEmpty(errorMessage))
+            if(!String.IsNullOrWhiteSpace(errorMessage))
                 throw new ArgumentException(errorMessage);
+        }
+
+        public static void ValidatePerson(string name, string oldName = "")
+        {
+            int foundEntries = AddressBookData.GetEntries().Rows.Cast<DataRow>().Where(item => item[1].ToString().ToLower().Equals(name.ToLower())).ToList().Count;
+
+            if ((foundEntries > 0 && String.IsNullOrWhiteSpace(oldName)) || (foundEntries > 0 && !String.IsNullOrWhiteSpace(oldName) && !oldName.ToLower().Equals(name.ToLower())))
+            {
+                throw new ArgumentException("An entry with the same name already exists.");
+            }
         }
     }
 }
