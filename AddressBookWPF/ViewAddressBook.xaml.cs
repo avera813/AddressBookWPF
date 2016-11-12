@@ -11,18 +11,21 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddressBook : Page
     {
+        private AddressBook addressBook;
 
         public ViewAddressBook()
         {
             InitializeComponent();
+            addressBook = new AddressBook();
             UpdateEntries();
             addAddress.IsEnabled = true;
         }
 
         private void UpdateEntries()
         {
-            this.DataContext = AddressBookData.GetEntries();
-            this.entryListBox.ItemsSource = AddressBookData.GetEntries().OrderBy(item => item.Name);
+            addressBook.Sort();
+            this.DataContext = addressBook.GetContactList();
+            this.entryListBox.ItemsSource = addressBook.GetContactList();
         }
 
         /// <summary>

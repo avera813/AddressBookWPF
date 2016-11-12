@@ -70,6 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Address.cs" />
+    <Compile Include="AddressBook.cs" />
     <Compile Include="AddressBookData.cs" />
     <Compile Include="AddressBookDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
