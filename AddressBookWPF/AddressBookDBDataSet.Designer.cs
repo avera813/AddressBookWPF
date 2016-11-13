@@ -955,7 +955,7 @@ namespace AddressBookWPF {
                     base(rb) {
                 this.tableAddress = ((AddressDataTable)(this.Table));
             }
-            
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Id {

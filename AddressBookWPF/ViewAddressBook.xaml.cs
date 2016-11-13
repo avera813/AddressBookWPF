@@ -23,7 +23,6 @@ namespace AddressBookWPF
 
         private void UpdateEntries()
         {
-            addressBook.Sort();
             this.DataContext = addressBook.GetContactList();
             this.entryListBox.ItemsSource = addressBook.GetContactList();
         }
@@ -62,7 +61,7 @@ namespace AddressBookWPF
         {
             try
             {
-                AddressBookData.DeleteEntry(this.entryListBox.SelectedItem as AddressBookDBDataSet.PersonRow);
+                addressBook.Delete(this.entryListBox.SelectedItem as Address);
                 MessageBox.Show("The entry has been removed from the address book.");
                 UpdateEntries();
             }

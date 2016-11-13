@@ -9,9 +9,12 @@ namespace AddressBookWPF
     /// </summary>
     public partial class AddAddress : Page
     {
+        private AddressBook addressBook;
+
         public AddAddress()
         {
             InitializeComponent();
+            addressBook = new AddressBook();
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -22,8 +25,8 @@ namespace AddressBookWPF
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                AddressBookData.AddEntry(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
+            { 
+                addressBook.Add(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
                 MessageBox.Show("The entry has been added.");
                 this.NavigationService.Navigate(new ViewAddressBook());
             }

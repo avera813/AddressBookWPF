@@ -9,7 +9,7 @@ namespace AddressBookWPF
     /// </summary>
     public partial class EditAddress : Page
     {
-
+        private AddressBook addressBook;
         private string oldName;
 
         public EditAddress()
@@ -19,15 +19,16 @@ namespace AddressBookWPF
 
         public EditAddress(object data) : this()
         {
+            addressBook = new AddressBook();
             this.DataContext = data;
-            oldName = (data as AddressBookDBDataSet.PersonRow).Name;
+            oldName = (data as Address).Name;
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                AddressBookData.UpdateEntry(this.DataContext as AddressBookDBDataSet.PersonRow, oldName);
+                addressBook.Update(oldName, this.DataContext as Address);
                 MessageBox.Show("The entry has been updated.");
                 this.NavigationService.Navigate(new ViewAddressBook());               
             }

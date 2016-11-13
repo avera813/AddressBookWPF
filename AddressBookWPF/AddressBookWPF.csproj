@@ -72,13 +72,11 @@
     </ApplicationDefinition>
     <Compile Include="Address.cs" />
     <Compile Include="AddressBook.cs" />
-    <Compile Include="AddressBookData.cs" />
     <Compile Include="AddressBookDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AddressBookDBDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="AddressForm.cs" />
     <Compile Include="EditAddress.xaml.cs">
       <DependentUpon>EditAddress.xaml</DependentUpon>
     </Compile>
