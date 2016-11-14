@@ -23,8 +23,8 @@ namespace AddressBookWPF
 
         private void UpdateEntries()
         {
-            this.DataContext = addressBook.GetContactList();
-            this.entryListBox.ItemsSource = addressBook.GetContactList();
+            this.DataContext = addressBook.GetEntries();
+            this.entryListBox.ItemsSource = addressBook.GetEntries();
         }
 
         /// <summary>

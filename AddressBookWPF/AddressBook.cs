@@ -25,12 +25,12 @@ namespace AddressBookWPF
             return addressBookDbDataSetPersonTableAdapter.GetData();
         }
 
-        public AddressBookDBDataSet.AddressDataTable GetAddresses()
+        private AddressBookDBDataSet.AddressDataTable GetAddresses()
         {
             return addressBookDbDataSetAddressTableAdapter.GetData();
         }
         
-        public IEnumerable<Address> GetContactList()
+        public IEnumerable<Address> GetEntries()
         {
             IEnumerable<Address> entries =
                 from person in GetPeople()
@@ -64,9 +64,9 @@ namespace AddressBookWPF
 
         public void Add(Address address)
         {
-            int personId = GetPersonId(address.Name);
-
             address.Validate();
+
+            int personId = GetPersonId(address.Name);
 
             if (personId < 0)
             {
@@ -83,9 +83,9 @@ namespace AddressBookWPF
 
         public void Update(string oldName, Address address)
         {
-            int personId = GetPersonId(address.Name);
-
             address.Validate();
+
+            int personId = GetPersonId(address.Name);
 
             if ( personId < 0 || oldName.ToLower().Equals(address.Name.ToLower()) )
             {
