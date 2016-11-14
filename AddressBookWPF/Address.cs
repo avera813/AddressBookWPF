@@ -15,15 +15,7 @@ namespace AddressBookWPF
         public string Zip { get; set; }
         public string Country { get; set; }
 
-        public Address(string name, string street, string city, string state, string zip, string country)
-        {
-            this.Name = name;
-            this.Street = street;
-            this.City = city;
-            this.State = state;
-            this.Zip = zip;
-            this.Country = country;
-        }
+        public Address(){}
 
         public void Validate()
         {

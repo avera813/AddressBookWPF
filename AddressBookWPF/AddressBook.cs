@@ -37,7 +37,7 @@ namespace AddressBookWPF
                 join address in GetAddresses()
                 on person.Id equals address.PersonId
                 orderby person.Name ascending
-                select new Address(person.Name, address.Street, address.City, address.State, address.Zip, address.Country);
+                select new Address { Name = person.Name, Street = address.Street, City = address.City, State = address.State, Zip = address.Zip, Country = address.Country };
 
             return entries;
         }
@@ -62,9 +62,8 @@ namespace AddressBookWPF
             return -1;
         }
 
-        public void Add(string name, string street, string city, string state, string zip, string country)
+        public void Add(Address address)
         {
-            Address address = new Address(name, street, city, state, zip, country);
             int personId = GetPersonId(address.Name);
 
             address.Validate();
@@ -72,6 +71,7 @@ namespace AddressBookWPF
             if (personId < 0)
             {
                 addressBookDbDataSetPersonTableAdapter.Insert(address.Name);
+                personId = GetPersonId(address.Name);
                 addressBookDbDataSetAddressTableAdapter.Insert(address.Street, address.City, address.State, address.Zip, address.Country, personId);
             }
             else
@@ -83,11 +83,13 @@ namespace AddressBookWPF
 
         public void Update(string oldName, Address address)
         {
+            int personId = GetPersonId(address.Name);
+
             address.Validate();
 
-            if ( GetPersonId(address.Name) < 0 || oldName.ToLower().Equals(address.Name.ToLower()) )
+            if ( personId < 0 || oldName.ToLower().Equals(address.Name.ToLower()) )
             {
-                int personId = GetPersonId(oldName);
+                personId = GetPersonId(oldName);
                 int addressId = GetAddressId(personId);
 
                 AddressBookDBDataSet.AddressRow addressRow = GetAddresses().Where(item => item.Id.Equals(addressId)).First();
