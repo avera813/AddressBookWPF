@@ -17,7 +17,6 @@ namespace AddressBookWPF
         public ViewAddress(object data) : this()
         {
             this.DataContext = data;
-            addressInfo.ItemsSource = (data as Person).Addresses;
         }
 
         private void returnToAddressBook_Click(object sender, RoutedEventArgs e)

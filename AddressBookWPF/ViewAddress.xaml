@@ -26,22 +26,24 @@
             <Button Style="{StaticResource buttonStyle}" x:Name="returnToAddressBook" Margin="0,0,0,20" Grid.Row="0" Grid.Column="1" Click="returnToAddressBook_Click">Ok</Button>
         </Grid>
         <Label Style="{StaticResource entryLabelStyle}" Content="{Binding Name}" Grid.Row="1" Grid.Column="0"></Label>
-        <ItemsControl HorizontalAlignment="Stretch" Padding="0,0,0,0" Margin="20,40,20,20" Name="addressInfo" Grid.Row="1">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0}&#x0a;{1}, {2} {3}, {4}">
-                                <Binding Path="Street"/>
-                                <Binding Path="City"/>
-                                <Binding Path="State"/>
-                                <Binding Path="Zip"/>
-                                <Binding Path="Country"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ScrollViewer HorizontalAlignment="Stretch" Grid.Row="1" Margin="20,40,20,20" VerticalScrollBarVisibility="Auto">
+            <ItemsControl HorizontalAlignment="Stretch" Padding="0,0,0,0" ItemsSource="{Binding Addresses}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="0,0,0,10">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}&#x0a;{1}, {2} {3}, {4}">
+                                    <Binding Path="Street"/>
+                                    <Binding Path="City"/>
+                                    <Binding Path="State"/>
+                                    <Binding Path="Zip"/>
+                                    <Binding Path="Country"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -36,26 +36,36 @@ namespace AddressBookWPF
             // Validate the person and properties
             ValidatePerson(person);
 
-            int personId = person.Id;
-
-            if (personId <= 0)
+            // If entry already exists, just add a new address to it
+            if (CheckIfPersonExists(person))
             {
-                addressBook.People.Add(person);
-                addressBook.SaveChanges();
+                // Assign person to the one found in the address book
+                person = FindContact(name);
+
+                // Check if address already exists for the person
+                if (person.CheckIfAddressExists(address))
+                {
+                    throw new ArgumentException("The person and address are already in the address book.");
+                }
+                else
+                {
+                    // Add the address to the person if it isn't found.
+                    person.Addresses.Add(address);
+                }
             }
             else
             {
-                throw new ArgumentException("An entry with the same name already exists.");
+                addressBook.People.Add(person);
             }
 
+            addressBook.SaveChanges();
         }
         
         public void Update(string oldName, Person person)
         {
             ValidatePerson(person);
-            List<Person> foundNames = addressBook.People.Where(item => item.Name.ToLower().Equals(person.Name.ToLower())).ToList();
 
-            if (foundNames.Count <= 0 || oldName.ToLower().Equals(person.Name.ToLower()))
+            if (!CheckIfPersonExists(person) || oldName.ToLower().Equals(person.Name.ToLower()))
             {
                 Person currentPerson = addressBook.People.Where(item => item.Id.Equals(person.Id)).First();
                 addressBook.People.Attach(currentPerson);
@@ -86,7 +96,24 @@ namespace AddressBookWPF
             addressBook.People.Remove(person);
             addressBook.SaveChanges();
         }
-        
+
+        private bool CheckIfPersonExists(Person person)
+        {
+            List<Person> foundNames = addressBook.People.Where(item => item.Name.ToLower().Equals(person.Name.ToLower())).ToList();
+            if (foundNames.Any())
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        private Person FindContact(string name)
+        {
+            Person foundPerson = addressBook.People.Where(item => item.Name.ToLower().Equals(name.ToLower())).First();
+            return foundPerson;
+        }
+
         public void ValidatePerson(Person person)
         {
             string errorMessage = "";
