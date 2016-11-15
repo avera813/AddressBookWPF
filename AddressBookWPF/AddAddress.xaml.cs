@@ -24,17 +24,16 @@ namespace AddressBookWPF
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            /*try
+            try
             {
-                Address address = new Address { Name = name.Text, Street = street.Text, City = city.Text, State = state.Text, Zip = zip.Text, Country = country.Text };
-                addressBook.Add(address);
+                addressBook.Add(name.Text, street.Text, city.Text, state.Text, zip.Text, country.Text);
                 MessageBox.Show("The entry has been added.");
                 this.NavigationService.Navigate(new ViewAddressBook());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
     }
 }

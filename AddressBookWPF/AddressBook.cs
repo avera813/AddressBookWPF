@@ -1,82 +1,47 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Data.Entity.Infrastructure;
+using System.Runtime.Remoting.Contexts;
 
 namespace AddressBookWPF
 {
     class AddressBook
     {
         AddressBookContext addressBook;
-        /*private AddressBookDBDataSet addressBookDbDataSet;
-        private AddressBookDBDataSetTableAdapters.PeopleTableAdapter addressBookDbDataSetPeopleTableAdapter;
-        private AddressBookDBDataSetTableAdapters.AddressesTableAdapter addressBookDbDataSetAddressesTableAdapter;*/
 
         public AddressBook()
         {
             addressBook = new AddressBookContext();
-            /*addressBookDbDataSet = new AddressBookDBDataSet();
-            addressBookDbDataSetPeopleTableAdapter = new AddressBookDBDataSetTableAdapters.PeopleTableAdapter();
-            addressBookDbDataSetAddressesTableAdapter = new AddressBookDBDataSetTableAdapters.AddressesTableAdapter();*/
-        }
-        /*
-        private AddressBookDBDataSet.PeopleDataTable GetPeople()
-        {
-            return addressBookDbDataSetPeopleTableAdapter.GetData();
         }
 
-        private AddressBookDBDataSet.AddressesDataTable GetAddresses()
-        {
-            return addressBookDbDataSetAddressesTableAdapter.GetData();
-        }
-        */
         public List<Person> GetEntries()
         {
             return addressBook.People.ToList();
-            /*
-            IEnumerable<Address> entries =
-                from person in GetPeople()
-                join address in GetAddresses()
-                on person.Id equals address.PersonId
-                orderby person.Name ascending
-                select new Address { Name = person.Name, Street = address.Street, City = address.City, State = address.State, Zip = address.Zip, Country = address.Country };
-
-            return entries;*/
-        }
-        /*
-        private int GetPersonId(string name)
-        {
-            List<AddressBookDBDataSet.PeopleRow> foundRows = GetPeople().Where(person => person.Name.ToLower().Equals(name.ToLower())).ToList();
-            if(foundRows.Any())
-            {
-                return foundRows.First().Id;
-            }
-            return -1;
         }
 
-        private int GetAddressId(int personId)
+        public void Add(string name, string street, string city, string state, string zip, string country)
         {
-            List<AddressBookDBDataSet.AddressesRow> foundRows = GetAddresses().Where(item => item.PersonId.Equals(personId)).ToList();
-            if (foundRows.Any())
+            // Create new person and give the person a name
+            Person person = new Person { Name = name };
+
+            // Create new address and add to person's addresses
+            Address address = new Address { Street = street, City = city, State = state, Zip = zip, Country = country };
+            person.Addresses.Add(address);
+            
+            // Validate the person and properties
+            ValidatePerson(person);
+
+            int personId = person.Id;
+
+            if (personId <= 0)
             {
-                return foundRows.First().Id;
-            }
-            return -1;
-        }
-
-        public void Add(Address address)
-        {
-            address.Validate();
-
-            int personId = GetPersonId(address.Name);
-
-            if (personId < 0)
-            {
-                addressBookDbDataSetPeopleTableAdapter.Insert(address.Name);
-                personId = GetPersonId(address.Name);
-                addressBookDbDataSetAddressesTableAdapter.Insert(address.Street, address.City, address.State, address.Zip, address.Country, personId);
+                addressBook.People.Add(person);
+                addressBook.SaveChanges();
             }
             else
             {
@@ -84,41 +49,78 @@ namespace AddressBookWPF
             }
 
         }
-
-        public void Update(string oldName, Address address)
+        
+        public void Update(string oldName, Person person)
         {
-            address.Validate();
+            ValidatePerson(person);
+            List<Person> foundNames = addressBook.People.Where(item => item.Name.ToLower().Equals(person.Name.ToLower())).ToList();
 
-            int personId = GetPersonId(address.Name);
-
-            if ( personId < 0 || oldName.ToLower().Equals(address.Name.ToLower()) )
+            if (foundNames.Count <= 0 || oldName.ToLower().Equals(person.Name.ToLower()))
             {
-                personId = GetPersonId(oldName);
-                int addressId = GetAddressId(personId);
+                Person currentPerson = addressBook.People.Where(item => item.Id.Equals(person.Id)).First();
+                addressBook.People.Attach(currentPerson);
+                currentPerson.Name = person.Name;
 
-                AddressBookDBDataSet.AddressesRow addressRow = GetAddresses().Where(item => item.Id.Equals(addressId)).First();
-                addressRow.Street = address.Street;
-                addressRow.City = address.City;
-                addressRow.State = address.State;
-                addressRow.Zip = address.Zip;
-                addressRow.Country = address.Country;
+                for (var i = 0; i < currentPerson.Addresses.Count; ++i)
+                {
+                    var currentAddress = currentPerson.Addresses.ElementAt(i);
+                    var newAddress = person.Addresses.ElementAt(i);
+                    currentAddress.Street = newAddress.Street;
+                    currentAddress.City = newAddress.City;
+                    currentAddress.State = newAddress.State;
+                    currentAddress.Zip = newAddress.Zip;
+                    currentAddress.Country = newAddress.Country;
+                }
 
-                addressBookDbDataSetPeopleTableAdapter.Update(address.Name, personId, oldName);
-                addressBookDbDataSetAddressesTableAdapter.Update(addressRow);
+                addressBook.SaveChanges();
             }
             else
             {
                 throw new ArgumentException("An entry with the same name already exists.");
             }
         }
-
-        public void Delete(Address address)
+        
+        public void Delete(Person person)
         {
-            int personId = GetPersonId(address.Name);
-            int addressId = GetAddressId(personId);
-            addressBookDbDataSetAddressesTableAdapter.Delete(addressId, address.Street, address.City, address.State, address.Zip, address.Country, personId);
-            addressBookDbDataSetPeopleTableAdapter.Delete(personId, address.Name);
+            addressBook.Addresses.RemoveRange(person.Addresses);
+            addressBook.People.Remove(person);
+            addressBook.SaveChanges();
         }
-        */
+        
+        public void ValidatePerson(Person person)
+        {
+            string errorMessage = "";
+
+            if(String.IsNullOrWhiteSpace(person.Name))
+                errorMessage += "Please provide a name." + System.Environment.NewLine;
+
+            if (person.Addresses.Any())
+            {
+                var addresses = person.Addresses;
+
+                for (var i = 0; i < addresses.Count; ++i)
+                {
+                    errorMessage += System.Environment.NewLine;
+
+                    if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Street))
+                        errorMessage += "Please provide a street for row: " + i + System.Environment.NewLine;
+
+                    if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).City))
+                        errorMessage += "Please provide a city for row: " + i + System.Environment.NewLine;
+
+                    if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).State))
+                        errorMessage += "Please provide a state for row: " + i + System.Environment.NewLine;
+
+                    if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Zip))
+                        errorMessage += "Please provide a zip for row: " + i + System.Environment.NewLine;
+
+                    if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Country))
+                        errorMessage += "Please provide a country for row: " + i;
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(errorMessage))
+                throw new ArgumentException(errorMessage);
+        }
     }
 }

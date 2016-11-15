@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace AddressBookWPF
 {
@@ -8,7 +9,6 @@ namespace AddressBookWPF
     /// </summary>
     public partial class ViewAddress : Page
     {
-
         public ViewAddress()
         {
             InitializeComponent();
@@ -17,12 +17,7 @@ namespace AddressBookWPF
         public ViewAddress(object data) : this()
         {
             this.DataContext = data;
-            Person person = data as Person;
-            foreach (Address address in person.Addresses)
-            {
-                MessageBox.Show(address.Street);
-            }
-            
+            addressInfo.ItemsSource = (data as Person).Addresses;
         }
 
         private void returnToAddressBook_Click(object sender, RoutedEventArgs e)

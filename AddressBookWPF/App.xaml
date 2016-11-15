@@ -44,5 +44,8 @@
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="tableInputStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="BorderThickness" Value="0"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

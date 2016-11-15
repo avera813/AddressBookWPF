@@ -59,16 +59,16 @@ namespace AddressBookWPF
 
         private void deleteAddress_Click(object sender, RoutedEventArgs e)
         {
-            /*try
+            try
             {
-                addressBook.Delete(this.entryListBox.SelectedItem as Address);
+                addressBook.Delete(this.entryListBox.SelectedItem as Person);
                 MessageBox.Show("The entry has been removed from the address book.");
                 UpdateEntries();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
     }
 }

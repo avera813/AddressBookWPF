@@ -21,21 +21,21 @@ namespace AddressBookWPF
         {
             addressBook = new AddressBook();
             this.DataContext = data;
-            //oldName = (data as Address).Name;
+            oldName = (data as Person).Name;
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            /*try
+            try
             {
-                addressBook.Update(oldName, this.DataContext as Address);
+                addressBook.Update(oldName, this.DataContext as Person);
                 MessageBox.Show("The entry has been updated.");
                 this.NavigationService.Navigate(new ViewAddressBook());               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
