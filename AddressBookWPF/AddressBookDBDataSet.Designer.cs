@@ -24,9 +24,11 @@ namespace AddressBookWPF {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class AddressBookDBDataSet : global::System.Data.DataSet {
         
-        private AddressDataTable tableAddress;
+        private AddressesDataTable tableAddresses;
         
-        private PersonDataTable tablePerson;
+        private PeopleDataTable tablePeople;
+        
+        private global::System.Data.DataRelation relationFK_Addresses_People;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -56,11 +58,11 @@ namespace AddressBookWPF {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Address"] != null)) {
-                    base.Tables.Add(new AddressDataTable(ds.Tables["Address"]));
+                if ((ds.Tables["Addresses"] != null)) {
+                    base.Tables.Add(new AddressesDataTable(ds.Tables["Addresses"]));
                 }
-                if ((ds.Tables["Person"] != null)) {
-                    base.Tables.Add(new PersonDataTable(ds.Tables["Person"]));
+                if ((ds.Tables["People"] != null)) {
+                    base.Tables.Add(new PeopleDataTable(ds.Tables["People"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -84,9 +86,9 @@ namespace AddressBookWPF {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public AddressDataTable Address {
+        public AddressesDataTable Addresses {
             get {
-                return this.tableAddress;
+                return this.tableAddresses;
             }
         }
         
@@ -94,9 +96,9 @@ namespace AddressBookWPF {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public PersonDataTable Person {
+        public PeopleDataTable People {
             get {
-                return this.tablePerson;
+                return this.tablePeople;
             }
         }
         
@@ -167,11 +169,11 @@ namespace AddressBookWPF {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Address"] != null)) {
-                    base.Tables.Add(new AddressDataTable(ds.Tables["Address"]));
+                if ((ds.Tables["Addresses"] != null)) {
+                    base.Tables.Add(new AddressesDataTable(ds.Tables["Addresses"]));
                 }
-                if ((ds.Tables["Person"] != null)) {
-                    base.Tables.Add(new PersonDataTable(ds.Tables["Person"]));
+                if ((ds.Tables["People"] != null)) {
+                    base.Tables.Add(new PeopleDataTable(ds.Tables["People"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -206,18 +208,19 @@ namespace AddressBookWPF {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableAddress = ((AddressDataTable)(base.Tables["Address"]));
+            this.tableAddresses = ((AddressesDataTable)(base.Tables["Addresses"]));
             if ((initTable == true)) {
-                if ((this.tableAddress != null)) {
-                    this.tableAddress.InitVars();
+                if ((this.tableAddresses != null)) {
+                    this.tableAddresses.InitVars();
                 }
             }
-            this.tablePerson = ((PersonDataTable)(base.Tables["Person"]));
+            this.tablePeople = ((PeopleDataTable)(base.Tables["People"]));
             if ((initTable == true)) {
-                if ((this.tablePerson != null)) {
-                    this.tablePerson.InitVars();
+                if ((this.tablePeople != null)) {
+                    this.tablePeople.InitVars();
                 }
             }
+            this.relationFK_Addresses_People = this.Relations["FK_Addresses_People"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -228,21 +231,25 @@ namespace AddressBookWPF {
             this.Namespace = "http://tempuri.org/AddressBookDBDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableAddress = new AddressDataTable();
-            base.Tables.Add(this.tableAddress);
-            this.tablePerson = new PersonDataTable();
-            base.Tables.Add(this.tablePerson);
+            this.tableAddresses = new AddressesDataTable();
+            base.Tables.Add(this.tableAddresses);
+            this.tablePeople = new PeopleDataTable();
+            base.Tables.Add(this.tablePeople);
+            this.relationFK_Addresses_People = new global::System.Data.DataRelation("FK_Addresses_People", new global::System.Data.DataColumn[] {
+                        this.tablePeople.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAddresses.PersonIdColumn}, false);
+            this.Relations.Add(this.relationFK_Addresses_People);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeAddress() {
+        private bool ShouldSerializeAddresses() {
             return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializePerson() {
+        private bool ShouldSerializePeople() {
             return false;
         }
         
@@ -302,17 +309,17 @@ namespace AddressBookWPF {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void AddressRowChangeEventHandler(object sender, AddressRowChangeEvent e);
+        public delegate void AddressesRowChangeEventHandler(object sender, AddressesRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void PersonRowChangeEventHandler(object sender, PersonRowChangeEvent e);
+        public delegate void PeopleRowChangeEventHandler(object sender, PeopleRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class AddressDataTable : global::System.Data.TypedTableBase<AddressRow> {
+        public partial class AddressesDataTable : global::System.Data.TypedTableBase<AddressesRow> {
             
             private global::System.Data.DataColumn columnId;
             
@@ -330,8 +337,8 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressDataTable() {
-                this.TableName = "Address";
+            public AddressesDataTable() {
+                this.TableName = "Addresses";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -339,7 +346,7 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal AddressDataTable(global::System.Data.DataTable table) {
+            internal AddressesDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -356,7 +363,7 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected AddressDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected AddressesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -428,34 +435,34 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRow this[int index] {
+            public AddressesRow this[int index] {
                 get {
-                    return ((AddressRow)(this.Rows[index]));
+                    return ((AddressesRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AddressRowChangeEventHandler AddressRowChanging;
+            public event AddressesRowChangeEventHandler AddressesRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AddressRowChangeEventHandler AddressRowChanged;
+            public event AddressesRowChangeEventHandler AddressesRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AddressRowChangeEventHandler AddressRowDeleting;
+            public event AddressesRowChangeEventHandler AddressesRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event AddressRowChangeEventHandler AddressRowDeleted;
+            public event AddressesRowChangeEventHandler AddressesRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddAddressRow(AddressRow row) {
+            public void AddAddressesRow(AddressesRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRow AddAddressRow(string Street, string City, string State, string Zip, string Country, int PersonId) {
-                AddressRow rowAddressRow = ((AddressRow)(this.NewRow()));
+            public AddressesRow AddAddressesRow(string Street, string City, string State, string Zip, string Country, PeopleRow parentPeopleRowByFK_Addresses_People) {
+                AddressesRow rowAddressesRow = ((AddressesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Street,
@@ -463,23 +470,26 @@ namespace AddressBookWPF {
                         State,
                         Zip,
                         Country,
-                        PersonId};
-                rowAddressRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowAddressRow);
-                return rowAddressRow;
+                        null};
+                if ((parentPeopleRowByFK_Addresses_People != null)) {
+                    columnValuesArray[6] = parentPeopleRowByFK_Addresses_People[0];
+                }
+                rowAddressesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAddressesRow);
+                return rowAddressesRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRow FindById(int Id) {
-                return ((AddressRow)(this.Rows.Find(new object[] {
+            public AddressesRow FindById(int Id) {
+                return ((AddressesRow)(this.Rows.Find(new object[] {
                             Id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                AddressDataTable cln = ((AddressDataTable)(base.Clone()));
+                AddressesDataTable cln = ((AddressesDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -487,7 +497,7 @@ namespace AddressBookWPF {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new AddressDataTable();
+                return new AddressesDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -541,28 +551,28 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRow NewAddressRow() {
-                return ((AddressRow)(this.NewRow()));
+            public AddressesRow NewAddressesRow() {
+                return ((AddressesRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new AddressRow(builder);
+                return new AddressesRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(AddressRow);
+                return typeof(AddressesRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.AddressRowChanged != null)) {
-                    this.AddressRowChanged(this, new AddressRowChangeEvent(((AddressRow)(e.Row)), e.Action));
+                if ((this.AddressesRowChanged != null)) {
+                    this.AddressesRowChanged(this, new AddressesRowChangeEvent(((AddressesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -570,8 +580,8 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.AddressRowChanging != null)) {
-                    this.AddressRowChanging(this, new AddressRowChangeEvent(((AddressRow)(e.Row)), e.Action));
+                if ((this.AddressesRowChanging != null)) {
+                    this.AddressesRowChanging(this, new AddressesRowChangeEvent(((AddressesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -579,8 +589,8 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.AddressRowDeleted != null)) {
-                    this.AddressRowDeleted(this, new AddressRowChangeEvent(((AddressRow)(e.Row)), e.Action));
+                if ((this.AddressesRowDeleted != null)) {
+                    this.AddressesRowDeleted(this, new AddressesRowChangeEvent(((AddressesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -588,14 +598,14 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.AddressRowDeleting != null)) {
-                    this.AddressRowDeleting(this, new AddressRowChangeEvent(((AddressRow)(e.Row)), e.Action));
+                if ((this.AddressesRowDeleting != null)) {
+                    this.AddressesRowDeleting(this, new AddressesRowChangeEvent(((AddressesRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveAddressRow(AddressRow row) {
+            public void RemoveAddressesRow(AddressesRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -622,7 +632,7 @@ namespace AddressBookWPF {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "AddressDataTable";
+                attribute2.FixedValue = "AddressesDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -668,7 +678,7 @@ namespace AddressBookWPF {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class PersonDataTable : global::System.Data.TypedTableBase<PersonRow> {
+        public partial class PeopleDataTable : global::System.Data.TypedTableBase<PeopleRow> {
             
             private global::System.Data.DataColumn columnId;
             
@@ -676,8 +686,8 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonDataTable() {
-                this.TableName = "Person";
+            public PeopleDataTable() {
+                this.TableName = "People";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -685,7 +695,7 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PersonDataTable(global::System.Data.DataTable table) {
+            internal PeopleDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -702,7 +712,7 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected PersonDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected PeopleDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -734,53 +744,53 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRow this[int index] {
+            public PeopleRow this[int index] {
                 get {
-                    return ((PersonRow)(this.Rows[index]));
+                    return ((PeopleRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PersonRowChangeEventHandler PersonRowChanging;
+            public event PeopleRowChangeEventHandler PeopleRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PersonRowChangeEventHandler PersonRowChanged;
+            public event PeopleRowChangeEventHandler PeopleRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PersonRowChangeEventHandler PersonRowDeleting;
+            public event PeopleRowChangeEventHandler PeopleRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event PersonRowChangeEventHandler PersonRowDeleted;
+            public event PeopleRowChangeEventHandler PeopleRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddPersonRow(PersonRow row) {
+            public void AddPeopleRow(PeopleRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRow AddPersonRow(string Name) {
-                PersonRow rowPersonRow = ((PersonRow)(this.NewRow()));
+            public PeopleRow AddPeopleRow(string Name) {
+                PeopleRow rowPeopleRow = ((PeopleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Name};
-                rowPersonRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowPersonRow);
-                return rowPersonRow;
+                rowPeopleRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowPeopleRow);
+                return rowPeopleRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRow FindById(int Id) {
-                return ((PersonRow)(this.Rows.Find(new object[] {
+            public PeopleRow FindById(int Id) {
+                return ((PeopleRow)(this.Rows.Find(new object[] {
                             Id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                PersonDataTable cln = ((PersonDataTable)(base.Clone()));
+                PeopleDataTable cln = ((PeopleDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -788,7 +798,7 @@ namespace AddressBookWPF {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new PersonDataTable();
+                return new PeopleDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -818,28 +828,28 @@ namespace AddressBookWPF {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRow NewPersonRow() {
-                return ((PersonRow)(this.NewRow()));
+            public PeopleRow NewPeopleRow() {
+                return ((PeopleRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new PersonRow(builder);
+                return new PeopleRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(PersonRow);
+                return typeof(PeopleRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.PersonRowChanged != null)) {
-                    this.PersonRowChanged(this, new PersonRowChangeEvent(((PersonRow)(e.Row)), e.Action));
+                if ((this.PeopleRowChanged != null)) {
+                    this.PeopleRowChanged(this, new PeopleRowChangeEvent(((PeopleRow)(e.Row)), e.Action));
                 }
             }
             
@@ -847,8 +857,8 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.PersonRowChanging != null)) {
-                    this.PersonRowChanging(this, new PersonRowChangeEvent(((PersonRow)(e.Row)), e.Action));
+                if ((this.PeopleRowChanging != null)) {
+                    this.PeopleRowChanging(this, new PeopleRowChangeEvent(((PeopleRow)(e.Row)), e.Action));
                 }
             }
             
@@ -856,8 +866,8 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.PersonRowDeleted != null)) {
-                    this.PersonRowDeleted(this, new PersonRowChangeEvent(((PersonRow)(e.Row)), e.Action));
+                if ((this.PeopleRowDeleted != null)) {
+                    this.PeopleRowDeleted(this, new PeopleRowChangeEvent(((PeopleRow)(e.Row)), e.Action));
                 }
             }
             
@@ -865,14 +875,14 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.PersonRowDeleting != null)) {
-                    this.PersonRowDeleting(this, new PersonRowChangeEvent(((PersonRow)(e.Row)), e.Action));
+                if ((this.PeopleRowDeleting != null)) {
+                    this.PeopleRowDeleting(this, new PeopleRowChangeEvent(((PeopleRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovePersonRow(PersonRow row) {
+            public void RemovePeopleRow(PeopleRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -899,7 +909,7 @@ namespace AddressBookWPF {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "PersonDataTable";
+                attribute2.FixedValue = "PeopleDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -943,25 +953,25 @@ namespace AddressBookWPF {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class AddressRow : global::System.Data.DataRow {
+        public partial class AddressesRow : global::System.Data.DataRow {
             
-            private AddressDataTable tableAddress;
+            private AddressesDataTable tableAddresses;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal AddressRow(global::System.Data.DataRowBuilder rb) : 
+            internal AddressesRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableAddress = ((AddressDataTable)(this.Table));
+                this.tableAddresses = ((AddressesDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Id {
                 get {
-                    return ((int)(this[this.tableAddress.IdColumn]));
+                    return ((int)(this[this.tableAddresses.IdColumn]));
                 }
                 set {
-                    this[this.tableAddress.IdColumn] = value;
+                    this[this.tableAddresses.IdColumn] = value;
                 }
             }
             
@@ -969,10 +979,10 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Street {
                 get {
-                    return ((string)(this[this.tableAddress.StreetColumn]));
+                    return ((string)(this[this.tableAddresses.StreetColumn]));
                 }
                 set {
-                    this[this.tableAddress.StreetColumn] = value;
+                    this[this.tableAddresses.StreetColumn] = value;
                 }
             }
             
@@ -980,10 +990,10 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string City {
                 get {
-                    return ((string)(this[this.tableAddress.CityColumn]));
+                    return ((string)(this[this.tableAddresses.CityColumn]));
                 }
                 set {
-                    this[this.tableAddress.CityColumn] = value;
+                    this[this.tableAddresses.CityColumn] = value;
                 }
             }
             
@@ -991,10 +1001,10 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string State {
                 get {
-                    return ((string)(this[this.tableAddress.StateColumn]));
+                    return ((string)(this[this.tableAddresses.StateColumn]));
                 }
                 set {
-                    this[this.tableAddress.StateColumn] = value;
+                    this[this.tableAddresses.StateColumn] = value;
                 }
             }
             
@@ -1002,10 +1012,10 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Zip {
                 get {
-                    return ((string)(this[this.tableAddress.ZipColumn]));
+                    return ((string)(this[this.tableAddresses.ZipColumn]));
                 }
                 set {
-                    this[this.tableAddress.ZipColumn] = value;
+                    this[this.tableAddresses.ZipColumn] = value;
                 }
             }
             
@@ -1013,10 +1023,10 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Country {
                 get {
-                    return ((string)(this[this.tableAddress.CountryColumn]));
+                    return ((string)(this[this.tableAddresses.CountryColumn]));
                 }
                 set {
-                    this[this.tableAddress.CountryColumn] = value;
+                    this[this.tableAddresses.CountryColumn] = value;
                 }
             }
             
@@ -1024,10 +1034,21 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int PersonId {
                 get {
-                    return ((int)(this[this.tableAddress.PersonIdColumn]));
+                    return ((int)(this[this.tableAddresses.PersonIdColumn]));
                 }
                 set {
-                    this[this.tableAddress.PersonIdColumn] = value;
+                    this[this.tableAddresses.PersonIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PeopleRow PeopleRow {
+                get {
+                    return ((PeopleRow)(this.GetParentRow(this.Table.ParentRelations["FK_Addresses_People"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Addresses_People"]);
                 }
             }
         }
@@ -1035,25 +1056,25 @@ namespace AddressBookWPF {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class PersonRow : global::System.Data.DataRow {
+        public partial class PeopleRow : global::System.Data.DataRow {
             
-            private PersonDataTable tablePerson;
+            private PeopleDataTable tablePeople;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal PersonRow(global::System.Data.DataRowBuilder rb) : 
+            internal PeopleRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablePerson = ((PersonDataTable)(this.Table));
+                this.tablePeople = ((PeopleDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Id {
                 get {
-                    return ((int)(this[this.tablePerson.IdColumn]));
+                    return ((int)(this[this.tablePeople.IdColumn]));
                 }
                 set {
-                    this[this.tablePerson.IdColumn] = value;
+                    this[this.tablePeople.IdColumn] = value;
                 }
             }
             
@@ -1061,10 +1082,21 @@ namespace AddressBookWPF {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Name {
                 get {
-                    return ((string)(this[this.tablePerson.NameColumn]));
+                    return ((string)(this[this.tablePeople.NameColumn]));
                 }
                 set {
-                    this[this.tablePerson.NameColumn] = value;
+                    this[this.tablePeople.NameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AddressesRow[] GetAddressesRows() {
+                if ((this.Table.ChildRelations["FK_Addresses_People"] == null)) {
+                    return new AddressesRow[0];
+                }
+                else {
+                    return ((AddressesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Addresses_People"])));
                 }
             }
         }
@@ -1073,22 +1105,22 @@ namespace AddressBookWPF {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class AddressRowChangeEvent : global::System.EventArgs {
+        public class AddressesRowChangeEvent : global::System.EventArgs {
             
-            private AddressRow eventRow;
+            private AddressesRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRowChangeEvent(AddressRow row, global::System.Data.DataRowAction action) {
+            public AddressesRowChangeEvent(AddressesRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public AddressRow Row {
+            public AddressesRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1107,22 +1139,22 @@ namespace AddressBookWPF {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class PersonRowChangeEvent : global::System.EventArgs {
+        public class PeopleRowChangeEvent : global::System.EventArgs {
             
-            private PersonRow eventRow;
+            private PeopleRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRowChangeEvent(PersonRow row, global::System.Data.DataRowAction action) {
+            public PeopleRowChangeEvent(PeopleRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PersonRow Row {
+            public PeopleRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1150,7 +1182,7 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class AddressTableAdapter : global::System.ComponentModel.Component {
+    public partial class AddressesTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1164,7 +1196,7 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public AddressTableAdapter() {
+        public AddressesTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1261,7 +1293,7 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Address";
+            tableMapping.DataSetTable = "Addresses";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Street", "Street");
             tableMapping.ColumnMappings.Add("City", "City");
@@ -1272,10 +1304,7 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Address] WHERE (([Id] = @Original_Id) AND ([Street] = @Origina" +
-                "l_Street) AND ([City] = @Original_City) AND ([State] = @Original_State) AND ([Zi" +
-                "p] = @Original_Zip) AND ([Country] = @Original_Country) AND ([PersonId] = @Origi" +
-                "nal_PersonId))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Addresses] WHERE (([Id] = @Original_Id) AND ([Street] = @Original_Street) AND ([City] = @Original_City) AND ([State] = @Original_State) AND ([Zip] = @Original_Zip) AND ([Country] = @Original_Country) AND ([PersonId] = @Original_PersonId))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Street", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Street", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -1286,10 +1315,10 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PersonId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Address] ([Street], [City], [State], [Zip], [Country], [Person" +
-                "Id]) VALUES (@Street, @City, @State, @Zip, @Country, @PersonId);\r\nSELECT Id, Str" +
-                "eet, City, State, Zip, Country, PersonId FROM Address WHERE (Id = SCOPE_IDENTITY" +
-                "())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Addresses] ([Street], [City], [State], [Zip], [Country], [Pers" +
+                "onId]) VALUES (@Street, @City, @State, @Zip, @Country, @PersonId);\r\nSELECT Id, S" +
+                "treet, City, State, Zip, Country, PersonId FROM Addresses WHERE (Id = SCOPE_IDEN" +
+                "TITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Street", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Street", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@City", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "City", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -1299,8 +1328,8 @@ namespace AddressBookWPF.AddressBookDBDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PersonId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PersonId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Address] SET [Street] = @Street, [City] = @City, [State] = @State, [Zip] = @Zip, [Country] = @Country, [PersonId] = @PersonId WHERE (([Id] = @Original_Id) AND ([Street] = @Original_Street) AND ([City] = @Original_City) AND ([State] = @Original_State) AND ([Zip] = @Original_Zip) AND ([Country] = @Original_Country) AND ([PersonId] = @Original_PersonId));
-SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Addresses] SET [Street] = @Street, [City] = @City, [State] = @State, [Zip] = @Zip, [Country] = @Country, [PersonId] = @PersonId WHERE (([Id] = @Original_Id) AND ([Street] = @Original_Street) AND ([City] = @Original_City) AND ([State] = @Original_State) AND ([Zip] = @Original_Zip) AND ([Country] = @Original_Country) AND ([PersonId] = @Original_PersonId));
+SELECT Id, Street, City, State, Zip, Country, PersonId FROM Addresses WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Street", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Street", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@City", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "City", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -1331,7 +1360,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, Street, City, State, Zip, Country, PersonId FROM dbo.Address";
+            this._commandCollection[0].CommandText = "SELECT Id, Street, City, State, Zip, Country, PersonId FROM dbo.Addresses";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1339,7 +1368,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(AddressBookDBDataSet.AddressDataTable dataTable) {
+        public virtual int Fill(AddressBookDBDataSet.AddressesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1352,9 +1381,9 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual AddressBookDBDataSet.AddressDataTable GetData() {
+        public virtual AddressBookDBDataSet.AddressesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            AddressBookDBDataSet.AddressDataTable dataTable = new AddressBookDBDataSet.AddressDataTable();
+            AddressBookDBDataSet.AddressesDataTable dataTable = new AddressBookDBDataSet.AddressesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1362,7 +1391,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(AddressBookDBDataSet.AddressDataTable dataTable) {
+        public virtual int Update(AddressBookDBDataSet.AddressesDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -1370,7 +1399,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(AddressBookDBDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Address");
+            return this.Adapter.Update(dataSet, "Addresses");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1596,7 +1625,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class PersonTableAdapter : global::System.ComponentModel.Component {
+    public partial class PeopleTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1610,7 +1639,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public PersonTableAdapter() {
+        public PeopleTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1707,27 +1736,27 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Person";
+            tableMapping.DataSetTable = "People";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Name", "Name");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Person] WHERE (([Id] = @Original_Id) AND ([Name] = @Original_N" +
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[People] WHERE (([Id] = @Original_Id) AND ([Name] = @Original_N" +
                 "ame))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Person] ([Name]) VALUES (@Name);\r\nSELECT Id, Name FROM Person " +
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[People] ([Name]) VALUES (@Name);\r\nSELECT Id, Name FROM People " +
                 "WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Person] SET [Name] = @Name WHERE (([Id] = @Original_Id) AND ([Name]" +
-                " = @Original_Name));\r\nSELECT Id, Name FROM Person WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[People] SET [Name] = @Name WHERE (([Id] = @Original_Id) AND ([Name]" +
+                " = @Original_Name));\r\nSELECT Id, Name FROM People WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -1748,7 +1777,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, Name FROM dbo.Person";
+            this._commandCollection[0].CommandText = "SELECT Id, Name FROM dbo.People";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1756,7 +1785,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(AddressBookDBDataSet.PersonDataTable dataTable) {
+        public virtual int Fill(AddressBookDBDataSet.PeopleDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1769,9 +1798,9 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual AddressBookDBDataSet.PersonDataTable GetData() {
+        public virtual AddressBookDBDataSet.PeopleDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            AddressBookDBDataSet.PersonDataTable dataTable = new AddressBookDBDataSet.PersonDataTable();
+            AddressBookDBDataSet.PeopleDataTable dataTable = new AddressBookDBDataSet.PeopleDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1779,7 +1808,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(AddressBookDBDataSet.PersonDataTable dataTable) {
+        public virtual int Update(AddressBookDBDataSet.PeopleDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -1787,7 +1816,7 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(AddressBookDBDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Person");
+            return this.Adapter.Update(dataSet, "People");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1916,9 +1945,9 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         
         private UpdateOrderOption _updateOrder;
         
-        private AddressTableAdapter _addressTableAdapter;
+        private AddressesTableAdapter _addressesTableAdapter;
         
-        private PersonTableAdapter _personTableAdapter;
+        private PeopleTableAdapter _peopleTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -1940,12 +1969,12 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public AddressTableAdapter AddressTableAdapter {
+        public AddressesTableAdapter AddressesTableAdapter {
             get {
-                return this._addressTableAdapter;
+                return this._addressesTableAdapter;
             }
             set {
-                this._addressTableAdapter = value;
+                this._addressesTableAdapter = value;
             }
         }
         
@@ -1954,12 +1983,12 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public PersonTableAdapter PersonTableAdapter {
+        public PeopleTableAdapter PeopleTableAdapter {
             get {
-                return this._personTableAdapter;
+                return this._peopleTableAdapter;
             }
             set {
-                this._personTableAdapter = value;
+                this._peopleTableAdapter = value;
             }
         }
         
@@ -1982,13 +2011,13 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._addressTableAdapter != null) 
-                            && (this._addressTableAdapter.Connection != null))) {
-                    return this._addressTableAdapter.Connection;
+                if (((this._addressesTableAdapter != null) 
+                            && (this._addressesTableAdapter.Connection != null))) {
+                    return this._addressesTableAdapter.Connection;
                 }
-                if (((this._personTableAdapter != null) 
-                            && (this._personTableAdapter.Connection != null))) {
-                    return this._personTableAdapter.Connection;
+                if (((this._peopleTableAdapter != null) 
+                            && (this._peopleTableAdapter.Connection != null))) {
+                    return this._peopleTableAdapter.Connection;
                 }
                 return null;
             }
@@ -2003,10 +2032,10 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._addressTableAdapter != null)) {
+                if ((this._addressesTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._personTableAdapter != null)) {
+                if ((this._peopleTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -2020,21 +2049,21 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateUpdatedRows(AddressBookDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._addressTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Address.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._peopleTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.People.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._addressTableAdapter.Update(updatedRows));
+                    result = (result + this._peopleTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._personTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Person.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._addressesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Addresses.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._personTableAdapter.Update(updatedRows));
+                    result = (result + this._addressesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -2048,19 +2077,19 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateInsertedRows(AddressBookDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._addressTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Address.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._peopleTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.People.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._addressTableAdapter.Update(addedRows));
+                    result = (result + this._peopleTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._personTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Person.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._addressesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Addresses.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._personTableAdapter.Update(addedRows));
+                    result = (result + this._addressesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -2074,19 +2103,19 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(AddressBookDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._personTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Person.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._addressesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Addresses.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._personTableAdapter.Update(deletedRows));
+                    result = (result + this._addressesTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._addressTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Address.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._peopleTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.People.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._addressTableAdapter.Update(deletedRows));
+                    result = (result + this._peopleTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -2129,13 +2158,13 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._addressTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._addressTableAdapter.Connection) == false))) {
+            if (((this._addressesTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._addressesTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            if (((this._personTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._personTableAdapter.Connection) == false))) {
+            if (((this._peopleTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._peopleTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -2171,22 +2200,22 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._addressTableAdapter != null)) {
-                    revertConnections.Add(this._addressTableAdapter, this._addressTableAdapter.Connection);
-                    this._addressTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._addressTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._addressTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._addressTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._addressTableAdapter.Adapter);
+                if ((this._addressesTableAdapter != null)) {
+                    revertConnections.Add(this._addressesTableAdapter, this._addressesTableAdapter.Connection);
+                    this._addressesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._addressesTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._addressesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._addressesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._addressesTableAdapter.Adapter);
                     }
                 }
-                if ((this._personTableAdapter != null)) {
-                    revertConnections.Add(this._personTableAdapter, this._personTableAdapter.Connection);
-                    this._personTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._personTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._personTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._personTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._personTableAdapter.Adapter);
+                if ((this._peopleTableAdapter != null)) {
+                    revertConnections.Add(this._peopleTableAdapter, this._peopleTableAdapter.Connection);
+                    this._peopleTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._peopleTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._peopleTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._peopleTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._peopleTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -2247,13 +2276,13 @@ SELECT Id, Street, City, State, Zip, Country, PersonId FROM Address WHERE (Id = 
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._addressTableAdapter != null)) {
-                    this._addressTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._addressTableAdapter]));
-                    this._addressTableAdapter.Transaction = null;
+                if ((this._addressesTableAdapter != null)) {
+                    this._addressesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._addressesTableAdapter]));
+                    this._addressesTableAdapter.Transaction = null;
                 }
-                if ((this._personTableAdapter != null)) {
-                    this._personTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._personTableAdapter]));
-                    this._personTableAdapter.Transaction = null;
+                if ((this._peopleTableAdapter != null)) {
+                    this._peopleTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._peopleTableAdapter]));
+                    this._peopleTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

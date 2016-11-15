@@ -1,46 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AddressBookWPF
 {
-    class Address
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class Address
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string Street { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string City { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string State { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string Zip { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string Country { get; set; }
 
-        public Address(){}
+        public int PersonId { get; set; }
 
-        public void Validate()
-        {
-            string errorMessage = "";
-
-            if (String.IsNullOrWhiteSpace(Name))
-                errorMessage += "Please provide a name." + System.Environment.NewLine;
-
-            if (String.IsNullOrWhiteSpace(Street))
-                errorMessage += "Please provide a street." + System.Environment.NewLine;
-
-            if (String.IsNullOrWhiteSpace(City))
-                errorMessage += "Please provide a city." + System.Environment.NewLine;
-
-            if (String.IsNullOrWhiteSpace(State))
-                errorMessage += "Please provide a state." + System.Environment.NewLine;
-
-            if (String.IsNullOrWhiteSpace(Zip))
-                errorMessage += "Please provide a zip." + System.Environment.NewLine;
-
-            if (String.IsNullOrWhiteSpace(Country))
-                errorMessage += "Please provide a country.";
-
-            if (!String.IsNullOrWhiteSpace(errorMessage))
-                throw new ArgumentException(errorMessage);
-        }
+        public virtual Person Person { get; set; }
     }
 }

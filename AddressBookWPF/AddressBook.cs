@@ -9,29 +9,33 @@ namespace AddressBookWPF
 {
     class AddressBook
     {
-        private AddressBookDBDataSet addressBookDbDataSet;
-        private AddressBookDBDataSetTableAdapters.PersonTableAdapter addressBookDbDataSetPersonTableAdapter;
-        private AddressBookDBDataSetTableAdapters.AddressTableAdapter addressBookDbDataSetAddressTableAdapter;
+        AddressBookContext addressBook;
+        /*private AddressBookDBDataSet addressBookDbDataSet;
+        private AddressBookDBDataSetTableAdapters.PeopleTableAdapter addressBookDbDataSetPeopleTableAdapter;
+        private AddressBookDBDataSetTableAdapters.AddressesTableAdapter addressBookDbDataSetAddressesTableAdapter;*/
 
         public AddressBook()
         {
-            addressBookDbDataSet = new AddressBookDBDataSet();
-            addressBookDbDataSetPersonTableAdapter = new AddressBookDBDataSetTableAdapters.PersonTableAdapter();
-            addressBookDbDataSetAddressTableAdapter = new AddressBookDBDataSetTableAdapters.AddressTableAdapter();
+            addressBook = new AddressBookContext();
+            /*addressBookDbDataSet = new AddressBookDBDataSet();
+            addressBookDbDataSetPeopleTableAdapter = new AddressBookDBDataSetTableAdapters.PeopleTableAdapter();
+            addressBookDbDataSetAddressesTableAdapter = new AddressBookDBDataSetTableAdapters.AddressesTableAdapter();*/
+        }
+        /*
+        private AddressBookDBDataSet.PeopleDataTable GetPeople()
+        {
+            return addressBookDbDataSetPeopleTableAdapter.GetData();
         }
 
-        private AddressBookDBDataSet.PersonDataTable GetPeople()
+        private AddressBookDBDataSet.AddressesDataTable GetAddresses()
         {
-            return addressBookDbDataSetPersonTableAdapter.GetData();
+            return addressBookDbDataSetAddressesTableAdapter.GetData();
         }
-
-        private AddressBookDBDataSet.AddressDataTable GetAddresses()
+        */
+        public List<Person> GetEntries()
         {
-            return addressBookDbDataSetAddressTableAdapter.GetData();
-        }
-        
-        public IEnumerable<Address> GetEntries()
-        {
+            return addressBook.People.ToList();
+            /*
             IEnumerable<Address> entries =
                 from person in GetPeople()
                 join address in GetAddresses()
@@ -39,12 +43,12 @@ namespace AddressBookWPF
                 orderby person.Name ascending
                 select new Address { Name = person.Name, Street = address.Street, City = address.City, State = address.State, Zip = address.Zip, Country = address.Country };
 
-            return entries;
+            return entries;*/
         }
-        
+        /*
         private int GetPersonId(string name)
         {
-            List<AddressBookDBDataSet.PersonRow> foundRows = GetPeople().Where(person => person.Name.ToLower().Equals(name.ToLower())).ToList();
+            List<AddressBookDBDataSet.PeopleRow> foundRows = GetPeople().Where(person => person.Name.ToLower().Equals(name.ToLower())).ToList();
             if(foundRows.Any())
             {
                 return foundRows.First().Id;
@@ -54,7 +58,7 @@ namespace AddressBookWPF
 
         private int GetAddressId(int personId)
         {
-            List<AddressBookDBDataSet.AddressRow> foundRows = GetAddresses().Where(item => item.PersonId.Equals(personId)).ToList();
+            List<AddressBookDBDataSet.AddressesRow> foundRows = GetAddresses().Where(item => item.PersonId.Equals(personId)).ToList();
             if (foundRows.Any())
             {
                 return foundRows.First().Id;
@@ -70,9 +74,9 @@ namespace AddressBookWPF
 
             if (personId < 0)
             {
-                addressBookDbDataSetPersonTableAdapter.Insert(address.Name);
+                addressBookDbDataSetPeopleTableAdapter.Insert(address.Name);
                 personId = GetPersonId(address.Name);
-                addressBookDbDataSetAddressTableAdapter.Insert(address.Street, address.City, address.State, address.Zip, address.Country, personId);
+                addressBookDbDataSetAddressesTableAdapter.Insert(address.Street, address.City, address.State, address.Zip, address.Country, personId);
             }
             else
             {
@@ -92,15 +96,15 @@ namespace AddressBookWPF
                 personId = GetPersonId(oldName);
                 int addressId = GetAddressId(personId);
 
-                AddressBookDBDataSet.AddressRow addressRow = GetAddresses().Where(item => item.Id.Equals(addressId)).First();
+                AddressBookDBDataSet.AddressesRow addressRow = GetAddresses().Where(item => item.Id.Equals(addressId)).First();
                 addressRow.Street = address.Street;
                 addressRow.City = address.City;
                 addressRow.State = address.State;
                 addressRow.Zip = address.Zip;
                 addressRow.Country = address.Country;
 
-                addressBookDbDataSetPersonTableAdapter.Update(address.Name, personId, oldName);
-                addressBookDbDataSetAddressTableAdapter.Update(addressRow);
+                addressBookDbDataSetPeopleTableAdapter.Update(address.Name, personId, oldName);
+                addressBookDbDataSetAddressesTableAdapter.Update(addressRow);
             }
             else
             {
@@ -112,8 +116,9 @@ namespace AddressBookWPF
         {
             int personId = GetPersonId(address.Name);
             int addressId = GetAddressId(personId);
-            addressBookDbDataSetAddressTableAdapter.Delete(addressId, address.Street, address.City, address.State, address.Zip, address.Country, personId);
-            addressBookDbDataSetPersonTableAdapter.Delete(personId, address.Name);
+            addressBookDbDataSetAddressesTableAdapter.Delete(addressId, address.Street, address.City, address.State, address.Zip, address.Country, personId);
+            addressBookDbDataSetPeopleTableAdapter.Delete(personId, address.Name);
         }
+        */
     }
 }

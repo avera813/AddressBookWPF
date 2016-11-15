@@ -24,7 +24,7 @@ namespace AddressBookWPF
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            /*try
             {
                 Address address = new Address { Name = name.Text, Street = street.Text, City = city.Text, State = state.Text, Zip = zip.Text, Country = country.Text };
                 addressBook.Add(address);
@@ -34,7 +34,7 @@ namespace AddressBookWPF
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
     }
 }

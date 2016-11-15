@@ -59,7 +59,7 @@ namespace AddressBookWPF
 
         private void deleteAddress_Click(object sender, RoutedEventArgs e)
         {
-            try
+            /*try
             {
                 addressBook.Delete(this.entryListBox.SelectedItem as Address);
                 MessageBox.Show("The entry has been removed from the address book.");
@@ -68,7 +68,7 @@ namespace AddressBookWPF
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
     }
 }
