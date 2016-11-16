@@ -26,33 +26,37 @@ namespace AddressBookWPF
 
         public void Add(string name, string street, string city, string state, string zip, string country)
         {
-            // Create new person and give the person a name
-            Person person = new Person { Name = name };
+            // Attempt to find person in address book and assign to person variable
+            Person person = FindContact(name);
 
-            // Create new address and add to person's addresses
+            // Create new address based on passed information
             Address address = new Address { Street = street, City = city, State = state, Zip = zip, Country = country };
-            person.Addresses.Add(address);
-            
-            // Validate the person and properties
-            ValidatePerson(person);
 
-            // If entry already exists, just add a new address to it
-            if (CheckIfPersonExists(person))
+            // Check if person is null (not found)
+            if(person == null)
             {
-                // Assign person to the one found in the address book
-                person = FindContact(name);
+                // Assign new person to existing person object
+                person = new Person { Name = name };
 
+                // Add address to the new person
+                person.Addresses.Add(address);
+
+                // Add person to address book
+                addressBook.People.Add(person);
+            }
+            else
+            {
                 // Check if address already exists for the person
                 if (person.CheckIfAddressExists(address))
                     throw new ArgumentException("The person and address are already in the address book.");
                 else
                     person.Addresses.Add(address);
             }
-            else
-            {
-                addressBook.People.Add(person);
-            }
 
+            // Validate the person and properties
+            ValidatePerson(person);
+
+            // Save the changes
             addressBook.SaveChanges();
         }
         
@@ -60,7 +64,7 @@ namespace AddressBookWPF
         {
             ValidatePerson(person);
 
-            if (!CheckIfPersonExists(person) || oldName.ToLower().Equals(person.Name.ToLower()))
+            if (FindContact(person.Name) == null || oldName.ToLower().Equals(person.Name.ToLower()))
             {
                 Person currentPerson = addressBook.People.Where(item => item.Id.Equals(person.Id)).First();
                 addressBook.People.Attach(currentPerson);
@@ -92,19 +96,12 @@ namespace AddressBookWPF
             addressBook.SaveChanges();
         }
 
-        private bool CheckIfPersonExists(Person person)
-        {
-            List<Person> foundNames = addressBook.People.Where(item => item.Name.ToLower().Equals(person.Name.ToLower())).ToList();
-            if (foundNames.Any())
-                return true;
-            
-            return false;
-        }
-
         private Person FindContact(string name)
         {
-            Person foundPerson = addressBook.People.Where(item => item.Name.ToLower().Equals(name.ToLower())).First();
-            return foundPerson;
+            var foundEntries = addressBook.People.Where(item => item.Name.ToLower().Equals(name.ToLower()));
+            if(foundEntries.Any())
+                return addressBook.People.Where(item => item.Name.ToLower().Equals(name.ToLower())).First();
+            return null;
         }
 
         public void ValidatePerson(Person person)
@@ -120,22 +117,24 @@ namespace AddressBookWPF
 
                 for (var i = 0; i < addresses.Count; ++i)
                 {
+                    var row = i + 1;
+
                     errorMessage += System.Environment.NewLine;
 
                     if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Street))
-                        errorMessage += "Please provide a street for row: " + i + System.Environment.NewLine;
+                        errorMessage += "Please provide a street for row: " + row + System.Environment.NewLine;
 
                     if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).City))
-                        errorMessage += "Please provide a city for row: " + i + System.Environment.NewLine;
+                        errorMessage += "Please provide a city for row: " + row + System.Environment.NewLine;
 
                     if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).State))
-                        errorMessage += "Please provide a state for row: " + i + System.Environment.NewLine;
+                        errorMessage += "Please provide a state for row: " + row + System.Environment.NewLine;
 
                     if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Zip))
-                        errorMessage += "Please provide a zip for row: " + i + System.Environment.NewLine;
+                        errorMessage += "Please provide a zip for row: " + row + System.Environment.NewLine;
 
                     if (String.IsNullOrWhiteSpace(addresses.ElementAt(i).Country))
-                        errorMessage += "Please provide a country for row: " + i;
+                        errorMessage += "Please provide a country for row: " + row;
                 }
             }
 
