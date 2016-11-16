@@ -44,14 +44,9 @@ namespace AddressBookWPF
 
                 // Check if address already exists for the person
                 if (person.CheckIfAddressExists(address))
-                {
                     throw new ArgumentException("The person and address are already in the address book.");
-                }
                 else
-                {
-                    // Add the address to the person if it isn't found.
                     person.Addresses.Add(address);
-                }
             }
             else
             {
@@ -101,9 +96,7 @@ namespace AddressBookWPF
         {
             List<Person> foundNames = addressBook.People.Where(item => item.Name.ToLower().Equals(person.Name.ToLower())).ToList();
             if (foundNames.Any())
-            {
                 return true;
-            }
             
             return false;
         }
