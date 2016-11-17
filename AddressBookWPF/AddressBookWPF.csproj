@@ -84,11 +84,6 @@
     <Compile Include="Address.cs" />
     <Compile Include="AddressBook.cs" />
     <Compile Include="AddressBookContext.cs" />
-    <Compile Include="AddressBookDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AddressBookDBDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="EditAddress.xaml.cs">
       <DependentUpon>EditAddress.xaml</DependentUpon>
     </Compile>
@@ -149,17 +144,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="AddressBookDBDataSet.xsc">
-      <DependentUpon>AddressBookDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="AddressBookDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>AddressBookDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="AddressBookDBDataSet.xss">
-      <DependentUpon>AddressBookDBDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
