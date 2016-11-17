@@ -21,7 +21,8 @@ namespace AddressBookWPF
 
         public List<Person> GetEntries()
         {
-            return addressBook.People.ToList();
+            List<Person> sortedEntries = addressBook.People.OrderBy(item => item.Name).ToList();
+            return sortedEntries;
         }
 
         public void Add(string name, string street, string city, string state, string zip, string country)
